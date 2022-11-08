@@ -29,7 +29,33 @@ $(document).ready(function(){
             });
         } 
     });
+
+    
+
 });
+
+function displayPage() {
+    document.getElementById("home").style.display = "block";
+    document.getElementById("about").style.display = "block";
+    document.getElementById("pedido").style.display = "block";
+    document.getElementById("testimonial").style.display = "block";
+    document.getElementById("contact").style.display = "block";
+    document.getElementById("login").style.display = "none";
+}
+
+function displayLogin() {
+    document.getElementById("").style.display = "none";
+    document.getElementById("login").style.display = "block";
+}
+
+
+
+function displayCadastro() {
+    document.getElementById("").style.display = "none";
+    document.getElementById("cadastro").style.display = "block";
+}
+
+
 
 new WOW().init();
 

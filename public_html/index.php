@@ -36,7 +36,7 @@
                 </li>
             -->
                 <li class="nav-item">
-                    <a class="nav-link" href="#book-table">Fazer Pedido</a>
+                    <a class="nav-link" href="#pedido">Fazer Pedido</a>
                 </li>
             </ul>
             <a class="navbar-brand m-auto" href="#">
@@ -56,7 +56,7 @@
                     <a class="nav-link" href="#contact">Contate-nos</a>
                 </li>
                 <li class="nav-item">
-                    <a href="components.html" class="btn btn-primary ml-xl-4">Login</a>
+                    <a class="btn btn-primary ml-xl-4" onClick="displayLogin()" href="#login">Entrar</a>
                 </li>
             </ul>
         </div>
@@ -70,8 +70,80 @@
         </div>
     </header>
 
+    <!--  login section  -->
+    <div class="container-fluid has-bg-overlay text-center text-light has-height-lg middle-items" id="login" style="display: none;">
+        <form action="" id="formLogin">
+        <div class="">
+            <h2 class="section-title mb-5 mt-5">Fazer Login</h2>
+            <div class="row mb-5">
+                <div class="col-sm-6 col-md-3 col-xs-12 my-2">
+                </div>
+                <div class="col-sm-6 col-md-3 col-xs-12 my-2">
+                    <input type="email" id="email" name="email" class="form-control form-control-lg custom-form-control" placeholder="Email">
+                </div>
+                <div class="col-sm-6 col-md-3 col-xs-12 my-2">
+                    <input type="password" id="senha" name="senha" class="form-control form-control-lg custom-form-control" placeholder="Senha">
+                </div>
+                <div class="col-sm-6 col-md-3 col-xs-12 my-2">
+                </div>
+            </div>
+            <div class="mb-2">
+                <a href="#" class="btn btn-lg btn-primary col-md-2" id="rounded-btn" onClick="undisplayLogin()">Cancelar</a>
+                <a href="#" class="btn btn-lg btn-primary col-md-2" id="rounded-btn">Entrar</a>
+            </div>
+            <a href="#cadastro" class="col-md-2" onClick="displayCadastro()">Ainda não tem uma conta? Cadastre-se</a>
+        </div>
+    </form>
+    </div>
+
+    <!--  cadastro de usuario section  -->
+    <div class="container-fluid has-bg-overlay text-center text-light has-height-lg middle-items" id="cadastro" style="display: none;">
+        <form action="" id="formCadastro">
+        <div class="">
+            <h2 class="section-title mb-5 mt-5">Fazer o Cadatro</h2>
+            <div class="row mb-3">
+                <div class="col-sm-6 col-md-3 col-xs-12 my-2">
+                </div>
+                <div class="col-sm-6 col-md-3 col-xs-12 my-2">
+                    <input type="text" id="nome" name="nome" class="form-control form-control-lg custom-form-control" placeholder="Nome">
+                </div>
+                <div class="col-sm-6 col-md-3 col-xs-12 my-2">
+                    <input type="email" id="email" name="email" class="form-control form-control-lg custom-form-control" placeholder="Email">
+                </div>
+                <div class="col-sm-6 col-md-3 col-xs-12 my-2">
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-sm-6 col-md-3 col-xs-12 my-2">
+                </div>
+                <div class="col-sm-6 col-md-3 col-xs-12 my-2">
+                    <input type="tel" id="telefone" name="telefone" class="form-control form-control-lg custom-form-control" placeholder="Telefone (00) 00000-0000" pattern="([0-9{2}])[0-9]{5}-[0-9]{4}">
+                </div>
+                <div class="col-sm-6 col-md-3 col-xs-12 my-2">
+                    <input type="password" id="senha" name="senha" class="form-control form-control-lg custom-form-control" placeholder="Senha">
+                </div>
+                <div class="col-sm-6 col-md-3 col-xs-12 my-2">
+                </div>
+            </div>
+            <div class="row mb-5">
+                <div class="col-sm-6 col-md-3 col-xs-12 my-2">
+                </div>
+                <div class="col-sm-6 col-md-3 col-xs-12 my-2">
+                </div>
+                <div class="col-sm-6 col-md-3 col-xs-12 my-2">
+                    <input type="password" id="confirmasenha" name="confirmasenha" class="form-control form-control-lg custom-form-control" placeholder="Confirmar Senha">
+                </div>
+                <div class="col-sm-6 col-md-3 col-xs-12 my-2">
+                </div>
+            </div>
+            <a href="#" class="btn btn-lg btn-primary col-md-2" id="rounded-btn">Cadastrar-se</a>
+            <a href="#" class="btn btn-lg btn-primary col-md-2" id="rounded-btn">Entrar</a>
+        </div>
+    </form>
+    </div>
+
     <!--  About Section  -->
-    <div id="about" class="container-fluid wow fadeIn" id="about"data-wow-duration="1.5s">
+    <div id="about" class="container-fluid wow fadeIn " id="about" data-wow-duration="1.5s">
         <div class="row">
             <div class="col-lg-6 has-img-bg"></div>
             <div class="col-lg-6">
@@ -168,8 +240,8 @@
     </div>
     -->
     <!-- book a table Section  -->
-    <div class="container-fluid has-bg-overlay text-center text-light has-height-lg middle-items" id="pedido">
-        <form action=""></form>
+    <div class="container-fluid has-bg-overlay text-center text-light has-height-lg middle-items sumirLogin" id="pedido">
+        <form action="" id="formPedido">
         <div class="">
             <h2 class="section-title mb-5">Fazer Pedido</h2>
             <div class="row mb-5">
@@ -337,7 +409,7 @@
             </div>
             <div class="col-sm-4">
                 <h3>Ligue</h3>
-                <P class="text-muted">(51) 990909099</P>
+                <P class="text-muted">(51) 99090-9099</P>
             </div>
             <div class="col-sm-4">
                 <h3>Encontre-nos</h3>
