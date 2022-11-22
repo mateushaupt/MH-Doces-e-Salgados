@@ -29,7 +29,7 @@ CREATE TABLE IF NOT EXISTS produto (
 );
 
 CREATE TABLE IF NOT EXISTS produtos (
-    produtos_id INT NOT NULL,,
+    produtos_id INT NOT NULL,
     quantidade INT NOT NULL,
     produto_id INT NOT NULL,
     PRIMARY KEY (produtos_id)

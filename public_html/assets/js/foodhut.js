@@ -30,31 +30,54 @@ $(document).ready(function(){
         } 
     });
 
-    
-
 });
 
-function displayPage() {
-    document.getElementById("home").style.display = "block";
+function undisplayCadastro() {
+    document.getElementById("homePage").style.display = "block";
+    document.getElementById("cadastro").style.display = "none";
     document.getElementById("about").style.display = "block";
     document.getElementById("pedido").style.display = "block";
     document.getElementById("testimonial").style.display = "block";
     document.getElementById("contact").style.display = "block";
     document.getElementById("login").style.display = "none";
+    
+    
+}
+
+function undisplayLogin() {
+    document.getElementById("homePage").style.display = "block";
+    document.getElementById("login").style.display = "none";
+    document.getElementById("about").style.display = "block";
+    document.getElementById("pedido").style.display = "block";
+    document.getElementById("testimonial").style.display = "block";
+    document.getElementById("contact").style.display = "block";
+    document.getElementById("cadastro").style.display = "none";
+    
+    
 }
 
 function displayLogin() {
-    document.getElementById("").style.display = "none";
     document.getElementById("login").style.display = "block";
+    document.getElementById("cadastro").style.display = "none";
+    document.getElementById("homePage").style.display = "none";
+    document.getElementById("about").style.display = "none";
+    document.getElementById("pedido").style.display = "none";
+    document.getElementById("testimonial").style.display = "none";
+    document.getElementById("contact").style.display = "none";
+    
+    
 }
-
-
 
 function displayCadastro() {
-    document.getElementById("").style.display = "none";
     document.getElementById("cadastro").style.display = "block";
+    document.getElementById("login").style.display = "none";
+    document.getElementById("homePage").style.display = "none";
+    document.getElementById("about").style.display = "none";
+    document.getElementById("pedido").style.display = "none";
+    document.getElementById("testimonial").style.display = "none";
+    document.getElementById("contact").style.display = "none";
+    
 }
-
 
 
 new WOW().init();

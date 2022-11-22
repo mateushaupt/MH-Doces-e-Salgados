@@ -62,7 +62,7 @@
         </div>
     </nav>
     <!-- header -->
-    <header id="home" class="header">
+    <header id="homePage" class="header">
         <div class="overlay text-white text-center">
             <h1 class="display-2 font-weight-bold my-3">MH</h1>
             <h2 class="display-4 mb-5">Gostoso &amp; Delicioso</h2>
@@ -136,8 +136,8 @@
                 <div class="col-sm-6 col-md-3 col-xs-12 my-2">
                 </div>
             </div>
+            <a href="#" class="btn btn-lg btn-primary col-md-2" id="rounded-btn" onClick="undisplayCadastro()">Cancelar</a>
             <a href="#" class="btn btn-lg btn-primary col-md-2" id="rounded-btn">Cadastrar-se</a>
-            <a href="#" class="btn btn-lg btn-primary col-md-2" id="rounded-btn">Entrar</a>
         </div>
     </form>
     </div>
