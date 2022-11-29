@@ -52,8 +52,6 @@ function undisplayLogin() {
     document.getElementById("testimonial").style.display = "block";
     document.getElementById("contact").style.display = "block";
     document.getElementById("cadastro").style.display = "none";
-    
-    
 }
 
 function displayLogin() {
@@ -64,8 +62,6 @@ function displayLogin() {
     document.getElementById("pedido").style.display = "none";
     document.getElementById("testimonial").style.display = "none";
     document.getElementById("contact").style.display = "none";
-    
-    
 }
 
 function displayCadastro() {
@@ -76,7 +72,6 @@ function displayCadastro() {
     document.getElementById("pedido").style.display = "none";
     document.getElementById("testimonial").style.display = "none";
     document.getElementById("contact").style.display = "none";
-    
 }
 
 
@@ -93,3 +88,31 @@ function initMap() {
       map: map
     });
  }
+
+function sendDataCadastro() {
+    var registro = $("#registro").val();
+    var name = $("#nome").val();
+    var email = $("#emailCad").val();
+    var contact = $("#telefone").val();
+    var password = $("#senhaCad").val();
+    var confirmpassword = $("#confirmasenha").val();
+    debugger
+    if (name == '' || email == '' || contact == '' || password == '' || confirmpassword == '') {
+    alert("Erro, alguns campos estão vazios...!!");
+    } else if (password != confirmpassword) {
+        alert("As senhas não coincidem!!")
+    } else {
+    alert("Cadastro realizado com sucesso!!")
+    $.post("backend/inserir.php", {
+        registro1: registro,
+        name1: name,
+        email1: email,
+        contact1: contact,
+        password1: password,
+        confirmpassword1: confirmpassword
+    }, function(data) {
+    alert(data);
+    $('#formCadastro').reset(); // To reset form fields
+    });
+}
+}
