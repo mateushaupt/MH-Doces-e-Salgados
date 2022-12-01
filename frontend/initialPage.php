@@ -1,3 +1,11 @@
+<?php
+session_start();
+error_reporting(0);
+include_once(__DIR__ . '..\..\backend\conecta.php');
+
+$banco = new Banco;
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -15,6 +23,7 @@
 
     <!-- Bootstrap + FoodHut main styles -->
     <link rel="stylesheet" href="assets/css/foodhut.css">
+
 </head>
 
 <body data-spy="scroll" data-target=".navbar" data-offset="40" id="home">
@@ -57,9 +66,21 @@
                 <li class="nav-item">
                     <a class="nav-link" href="#contact">Contate-nos</a>
                 </li>
-                <li class="nav-item">
-                    <a class="btn btn-primary ml-xl-4" onClick="displayLogin()" href="#login">Entrar</a>
-                </li>
+                <?php                       
+                    if($banco->autentica($_SESSION["usuario_id"])) {
+                    echo '
+                        <li class="nav-item dropdown">
+                        <button class="btn btn-outline-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Olá, Seja Bem-Vindo
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <a class="dropdown-item" href="#">Meus Pedidos</a>
+                        <a class="dropdown-item" href="#">Configurações</a>
+                        <a class="dropdown-item" href="..\backend\logout.php">Sair</a>
+                        </div>
+                        </li>';
+                    }
+                    ?>
             </ul>
         </div>
     </nav>
@@ -71,79 +92,6 @@
             <a class="btn btn-lg btn-primary" href="#pedido">Fazer pedido</a>
         </div>
     </header>
-
-    <!--  login section  -->
-    <div class="container-fluid has-bg-overlay text-center text-light has-height-lg middle-items" id="login" style="display: none;">
-        <form action="" id="formLogin">
-            <div class="">
-                <h2 class="section-title mb-5 mt-5">Fazer Login</h2>
-                <div class="row mb-5">
-                    <div class="col-sm-6 col-md-3 col-xs-12 my-2">
-                    </div>
-                    <div class="col-sm-6 col-md-3 col-xs-12 my-2">
-                        <input type="email" id="email" name="email" class="form-control form-control-lg custom-form-control" placeholder="Email">
-                    </div>
-                    <div class="col-sm-6 col-md-3 col-xs-12 my-2">
-                        <input type="password" id="senha" name="senha" class="form-control form-control-lg custom-form-control" placeholder="Senha">
-                    </div>
-                    <div class="col-sm-6 col-md-3 col-xs-12 my-2">
-                    </div>
-                </div>
-                <div class="mb-2">
-                    <a href="#" class="btn btn-lg btn-primary col-md-2" id="rounded-btn" onClick="undisplayLogin()">Cancelar</a>
-                    <a href="#" class="btn btn-lg btn-primary col-md-2" id="rounded-btn">Entrar</a>
-                </div>
-                <a href="#cadastro" class="col-md-2" onClick="displayCadastro()">Ainda não tem uma conta? Cadastre-se</a>
-            </div>
-        </form>
-    </div>
-
-    <!--  cadastro de usuario section  -->
-    <div class="container-fluid has-bg-overlay text-center text-light has-height-lg middle-items" id="cadastro" style="display: none;">
-        <form id="formCadastro">
-        <input type="hidden" value="3" name="registro" id="registro">
-            <div class="">
-                <h2 class="section-title mb-5 mt-5">Fazer o Cadatro</h2>
-                <div class="row mb-3">
-                    <div class="col-sm-6 col-md-3 col-xs-12 my-2">
-                    </div>
-                    <div class="col-sm-6 col-md-3 col-xs-12 my-2">
-                        <input type="text" id="nome" name="nome" class="form-control form-control-lg custom-form-control" placeholder="Nome">
-                    </div>
-                    <div class="col-sm-6 col-md-3 col-xs-12 my-2">
-                        <input type="text" id="emailCad" name="email" class="form-control form-control-lg custom-form-control" placeholder="Email">
-                    </div>
-                    <div class="col-sm-6 col-md-3 col-xs-12 my-2">
-                    </div>
-                </div>
-                <div class="row mb-3">
-                    <div class="col-sm-6 col-md-3 col-xs-12 my-2">
-                    </div>
-                    <div class="col-sm-6 col-md-3 col-xs-12 my-2">
-                        <input type="tel" id="telefone" name="telefone" class="form-control form-control-lg custom-form-control" placeholder="Telefone (00) 00000-0000" pattern="([0-9{2}])[0-9]{5}-[0-9]{4}">
-                    </div>
-                    <div class="col-sm-6 col-md-3 col-xs-12 my-2">
-                        <input type="password" id="senhaCad" name="senha" class="form-control form-control-lg custom-form-control" placeholder="Senha">
-                    </div>
-                    <div class="col-sm-6 col-md-3 col-xs-12 my-2">
-                    </div>
-                </div>
-                <div class="row mb-5">
-                    <div class="col-sm-6 col-md-3 col-xs-12 my-2">
-                    </div>
-                    <div class="col-sm-6 col-md-3 col-xs-12 my-2">
-                    </div>
-                    <div class="col-sm-6 col-md-3 col-xs-12 my-2">
-                        <input type="password" id="confirmasenha" name="confirmasenha" class="form-control form-control-lg custom-form-control" placeholder="Confirmar Senha">
-                    </div>
-                    <div class="col-sm-6 col-md-3 col-xs-12 my-2">
-                    </div>
-                </div>
-                <a href="#" class="btn btn-lg btn-primary col-md-2" id="rounded-btn" onClick="undisplayCadastro()">Cancelar</a>
-                <a href="#" class="btn btn-lg btn-primary col-md-2" id="rounded-btn" onclick="sendDataCadastro()">Cadastrar-se</a>
-            </div>
-        </form>
-    </div>
 
     <!--  About Section  -->
     <div id="about" class="container-fluid wow fadeIn " id="about" data-wow-duration="1.5s">

@@ -14,4 +14,10 @@ $conn = new PDO("mysql:host=" . SELF::DB_HOST . ";dbname=" . SELF::DB_DATABASE .
 $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 return $conn;
 }
+
+function autentica($usuario){
+    $conn = $this->conectar();
+    $query = $conn->query('SELECT * FROM usuario WHERE usuario_id = ' . $usuario);
+    return $query->fetchAll(PDO::FETCH_ASSOC);
+}
 }
