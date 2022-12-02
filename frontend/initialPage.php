@@ -66,21 +66,27 @@ $banco = new Banco;
                 <li class="nav-item">
                     <a class="nav-link" href="#contact">Contate-nos</a>
                 </li>
-                <?php                       
-                    if($banco->autentica($_SESSION["usuario_id"])) {
+                <?php
+                if ($banco->autenticaConexao($_SESSION["usuario_id"])) {
                     echo '
                         <li class="nav-item dropdown">
                         <button class="btn btn-outline-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Olá, Seja Bem-Vindo
                         </button>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        ';
+                    if ($banco->autentica($_SESSION["usuario_id"])) {
+                        echo '<a class="dropdown-item" href="produto.php">Produtos</a>';
+                    }
+                    echo
+                    '
                         <a class="dropdown-item" href="#">Meus Pedidos</a>
-                        <a class="dropdown-item" href="#">Configurações</a>
+                        <a class="dropdown-item" href="configUsuario.php">Configurações</a>
                         <a class="dropdown-item" href="..\backend\logout.php">Sair</a>
                         </div>
                         </li>';
-                    }
-                    ?>
+                }
+                ?>
             </ul>
         </div>
     </nav>

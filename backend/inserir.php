@@ -40,6 +40,34 @@ switch ($dados['registro']) {
             die('Já existe um usuário com o mesmo email cadastrado');
         }
         break;
+    }
+    
+    case 4:
+        if($dados){
+            $query = $conn->prepare('SELECT * FROM produto WHERE nome = :nome');
+            $query->execute([
+                ':nome' => $dados['nomeProduto']           
+            ]);
+        if($dados['tipoProduto'] === "") {
+            header('location:..\frontend\cadastroProduto.php');
+            echo "<script>alert('Selecione um tipo');</script>";
+        }
+        // Se houver um item com esse nome no banco, ele não insere
+        if($query->fetch(PDO::FETCH_ASSOC) == null){
+            $query = $conn->prepare('INSERT INTO produto (nome, valor, tipo) VALUES (:nome, :valor, :tipo);');
+        $query->execute([
+            ':nome' => $dados['nomeProduto'],
+            ':valor' => $dados['valorProduto'],
+            ':tipo' => $dados['tipoProduto']
+        ]);
+        header('location:..\frontend\produto.php');
+        echo "<script>alert('Produto cadastrado com sucesso!');</script>";
+        
+        } else{
+            // Por enquanto só morre, depois mostrar de forma mais amigável para o usuário
+            die('Já existe um produto com o mesmo nome cadastrado');
+        }
+        break;
     } 
 }
 

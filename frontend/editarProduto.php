@@ -1,3 +1,22 @@
+<?php
+session_start();
+error_reporting(0);
+include_once(__DIR__ . '../../backend/conecta.php');
+
+$banco = new Banco;
+$conn = $banco->conectar();
+
+$stmt = $conn->prepare('SELECT nome, valor, tipo FROM produto WHERE produto_id = :produto_id');
+$stmt->execute(
+    [
+        ':produto_id' => $_POST['produto_id']
+    ]
+);
+$ret = $stmt->fetch();
+
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -15,7 +34,6 @@
 
     <!-- Bootstrap + FoodHut main styles -->
     <link rel="stylesheet" href="assets/css/foodhut.css">
-    <?php session_start(); ?>
 </head>
 
 <body data-spy="scroll" data-target=".navbar" data-offset="40" id="home">
@@ -58,27 +76,46 @@
                 <li class="nav-item">
                     <a class="nav-link" href="#contact">Contate-nos</a>
                 </li>
-                <li class="nav-item">
-                    <a class="btn btn-primary ml-xl-4" href="login.php">Entrar</a>
-                </li>
+                <?php
+                if ($banco->autenticaConexao($_SESSION["usuario_id"])) {
+                    echo '
+                        <li class="nav-item dropdown">
+                        <button class="btn btn-outline-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Olá, Seja Bem-Vindo
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        ';
+                    if ($banco->autentica($_SESSION["usuario_id"])) {
+                        echo '<a class="dropdown-item" href="produto.php">Produtos</a>';
+                    }
+                    echo
+                    '
+                        <a class="dropdown-item" href="#">Meus Pedidos</a>
+                        <a class="dropdown-item" href="configUsuario.php">Configurações</a>
+                        <a class="dropdown-item" href="..\backend\logout.php">Sair</a>
+                        </div>
+                        </li>';
+                }
+                ?>
             </ul>
         </div>
     </nav>
 
-    <!--  cadastro de usuario section  -->
+    <!--  edicao de produto section  -->
     <div class="container-fluid has-bg-overlay text-center text-light has-height-lg middle-items" id="cadastro">
-        <form method="post" name="registration" action="../backend/inserir.php">
-        <input type="hidden" value="3" name="registro" id="registro">
+        <form method="post" name="registration" action="../backend/alterar.php">
+            <input type="hidden" value="1" name="registro" id="registro">
+            <input type="hidden" value="<?=$_POST['produto_id']?>" name="produto_id" id="produto_id">
             <div class="">
-                <h2 class="section-title mb-5 mt-5">Fazer o Cadatro</h2>
+                <h2 class="section-title mb-5 mt-5">Editar Produto</h2>
                 <div class="row mb-3">
                     <div class="col-sm-6 col-md-3 col-xs-12 my-2">
                     </div>
                     <div class="col-sm-6 col-md-3 col-xs-12 my-2">
-                        <input type="text" id="nome" name="nome" class="form-control form-control-lg custom-form-control" placeholder="Nome">
+                        <input type="text" id="nomeProduto" name="nomeProduto" class="form-control form-control-lg custom-form-control" placeholder="Nome do Produto" value="<?php echo htmlentities($ret['nome']) ?>">
                     </div>
                     <div class="col-sm-6 col-md-3 col-xs-12 my-2">
-                        <input type="text" id="emailCad" name="email" class="form-control form-control-lg custom-form-control" placeholder="Email">
+                        <input type="text" id="valorProduto" name="valorProduto" class="form-control form-control-lg custom-form-control" placeholder="Valor" value="<?php echo htmlentities($ret['valor']) ?>">
                     </div>
                     <div class="col-sm-6 col-md-3 col-xs-12 my-2">
                     </div>
@@ -87,57 +124,25 @@
                     <div class="col-sm-6 col-md-3 col-xs-12 my-2">
                     </div>
                     <div class="col-sm-6 col-md-3 col-xs-12 my-2">
-                        <input type="tel" id="telefone" name="telefone" class="form-control form-control-lg custom-form-control" placeholder="Telefone (00) 00000-0000">
+                        <select class="form-control form-control-lg custom-form-control" id="tipoProduto" name="tipoProduto">
+                            <option value="" disabled selected>Tipo</option>
+                            <option value="Doce" <?php if ($ret['tipo'] == 'doce') print('selected') ?>>Doce</option>
+                            <option value="Salgado" <?php if ($ret['tipo'] == 'salgado') print('selected') ?>>Salgado</option>
+                            <option value="Bolo" <?php if ($ret['tipo'] == 'bolo') print('selected') ?>>Bolo</option>
+                        </select>
                     </div>
                     <div class="col-sm-6 col-md-3 col-xs-12 my-2">
-                        <input type="password" id="senhaCad" name="senha" class="form-control form-control-lg custom-form-control" placeholder="Senha">
-                    </div>
-                    <div class="col-sm-6 col-md-3 col-xs-12 my-2">
-                    </div>
-                </div>
-                <div class="row mb-5">
-                    <div class="col-sm-6 col-md-3 col-xs-12 my-2">
-                    </div>
-                    <div class="col-sm-6 col-md-3 col-xs-12 my-2">
-                    </div>
-                    <div class="col-sm-6 col-md-3 col-xs-12 my-2">
-                        <input type="password" id="confirmasenha" name="confirmasenha" class="form-control form-control-lg custom-form-control" placeholder="Confirmar Senha">
                     </div>
                     <div class="col-sm-6 col-md-3 col-xs-12 my-2">
                     </div>
                 </div>
                 <div class="mb-2">
-                    <a href="initialPage.php" class="btn btn-lg btn-primary col-md-2" id="rounded-btn">Cancelar</a>
-                    <button type="submit" name="submit" class="btn btn-lg btn-primary col-md-2" id="rounded-btn">Cadastrar-se</button>
+                    <a href="produto.php" class="btn btn-lg btn-primary col-md-2" id="rounded-btn">Cancelar</a>
+                    <button type="submit" name="submit" class="btn btn-lg btn-primary col-md-2" id="rounded-btn">Salvar</button>
                 </div>
-                <a href="login.php" class="col-md-2">Já tem uma conta? Faça o Login!</a>
             </div>
         </form>
     </div>
-
-    <!-- page footer  -->
-    <div class="container-fluid bg-dark text-light has-height-md middle-items border-top text-center wow fadeIn">
-        <div class="row">
-            <div class="col-sm-4">
-                <h3>Envie um Email</h3>
-                <P class="text-muted">mh@gmail.com</P>
-            </div>
-            <div class="col-sm-4">
-                <h3>Ligue</h3>
-                <P class="text-muted">(51) 99090-9099</P>
-            </div>
-            <div class="col-sm-4">
-                <h3>Encontre-nos</h3>
-                <P class="text-muted"> Rua Osvino Hummes, 40, Salvador do Sul, Brasil</P>
-            </div>
-        </div>
-    </div>
-    <div class="bg-dark text-light text-center border-top wow fadeIn">
-        <p class="mb-0 py-3 text-muted small">&copy; Copyright <script>
-                document.write(new Date().getFullYear())
-            </script> Made with <i class="ti-heart text-danger"></i> By <a href="http://devcrud.com">DevCRUD</a></p>
-    </div>
-    <!-- end of page footer -->
 
     <!-- core  -->
     <script src="assets/vendors/jquery/jquery-3.4.1.js"></script>
@@ -148,9 +153,6 @@
 
     <!-- wow.js -->
     <script src="assets/vendors/wow/wow.js"></script>
-
-    <!-- google maps -->
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCtme10pzgKSPeJVJrG1O3tjR6lk98o4w8&callback=initMap"></script>
 
     <!-- FoodHut js -->
     <script src="assets/js/foodhut.js"></script>

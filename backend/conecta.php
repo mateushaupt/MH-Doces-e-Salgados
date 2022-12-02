@@ -15,9 +15,15 @@ $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 return $conn;
 }
 
-function autentica($usuario){
+function autenticaConexao($usuario){
     $conn = $this->conectar();
     $query = $conn->query('SELECT * FROM usuario WHERE usuario_id = ' . $usuario);
+    return $query->fetchAll(PDO::FETCH_ASSOC);
+}
+
+function autentica($usuario){
+    $conn = $this->conectar();
+    $query = $conn->query('SELECT * FROM usuario WHERE adm IS NOT NULL AND usuario_id = ' . $usuario);
     return $query->fetchAll(PDO::FETCH_ASSOC);
 }
 }

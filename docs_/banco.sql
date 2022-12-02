@@ -10,6 +10,7 @@ CREATE TABLE IF NOT EXISTS usuario (
     senha VARCHAR(40) NOT NULL,
     telefone VARCHAR(40) NOT NULL,
     email VARCHAR(120) NOT NULL,
+    adm VARCHAR(23),
     PRIMARY KEY (usuario_id)
 );
 
@@ -25,6 +26,7 @@ CREATE TABLE IF NOT EXISTS produto (
     produto_id INT NOT NULL AUTO_INCREMENT,
     nome VARCHAR(40) NOT NULL,
     valor INT NOT NULL,
+    tipo VARCHAR(20) NOT NULL,
     PRIMARY KEY (produto_id)
 );
 
