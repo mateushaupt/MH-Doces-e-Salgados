@@ -1,13 +1,9 @@
 <?php
 session_start();
-include_once(__DIR__ . '..\..\backend\conecta.php');
+include_once(__DIR__ . '..\..\backend\banco.php');
 $banco = new Banco;
 
 $pesquisa = 1;
-
-$tipoDoce = true;
-$tipoSalgado = true;
-$tipoBolo = true;
 
 ?>
 
@@ -96,53 +92,147 @@ $tipoBolo = true;
     </nav>
 
     <!--  visualizar produto section  -->
-    <div class="container-fluid text-center text-light has-height-lg middle-items" id="tableProduto">
+    <div class="container-fluid text-center text-light  middle-items" id="tableProduto">
     <h1 class="mb-3 mt-5">Produtos</h1>
         <div class="mb-3 mt-5">
             
             <a href="cadastroProduto.php" class="btn btn-primary mb-3 mt-7">Adicionar Produto</a>
             <a href="initialPage.php" class="btn btn-primary mb-3 mt-7">Voltar</a>
         </div>
+    </div>
+    <div class="container-fluid text-center text-light">
+        <h2 class="mb-3 mt-5">Doces</h2>
+    </div>
+    <div class="container-fluid text-center text-light middle-items" id="tableProduto">
         <table id="datatablesSimple" class="table table-striped table-dark">
             <thead>
                 <tr>
                     <th>Nome</th>
                     <th>Valor</th>
-                    <th>Tipo</th>
                     <th>Ação</th>
                 </tr>
             </thead>
             <tbody>
                 <?php
-                $produtos = include_once(__DIR__ . '..\..\backend\buscar.php');
-                for ($p = 0; $p < count($produtos); $p++) {
-                ?>
+                $doces = $banco->buscaProduto();
+                for ($d = 0; $d < count($doces); $d++) {
+                    if($doces[$d]["tipo"] == 'Doce'){
+                        echo '
+                
 
                     <tr>
-                        <td><?php echo htmlentities($produtos[$p]["nome"]); ?></td>
-                        <td><?php echo htmlentities($produtos[$p]["valor"]); ?></td>
-                        <td><?php echo htmlentities($produtos[$p]["tipo"]); ?></td>
+                        <td>' . htmlentities($doces[$d]["nome"]) . '</td>
+                        <td>' . htmlentities($doces[$d]["valor"]) . '</td>
                         <td>
                             <div class="btn-group" role="group">
                                 <form action="editarProduto.php" method="post">
                                     <input type="hidden" value="2" name="registro" id="registro">
-                                    <input type="hidden" value="<?php echo htmlentities($produtos[$p]["produto_id"]); ?>" name="produto_id">
+                                    <input type="hidden" value="' . htmlentities($doces[$d]["produto_id"]) . '" name="produto_id">
                                     <button type="submit" name="submit" class="btn btn-primary ms-2">Editar</button>
                                 </form>
                                 <form action="../backend/excluir.php" method="post">
                                     <input type="hidden" value="2" name="registro" id="registro">
-                                    <input type="hidden" value="<?php echo htmlentities($produtos[$p]["produto_id"]); ?>" name="produto_id">
+                                    <input type="hidden" value=" '. htmlentities($doces[$d]["produto_id"]) . '" name="produto_id">
                                     <button type="submit" name="submit" class="btn btn-primary ms-2">Excluir</button>
                                 </form>
 
                             </div>
                         </td>
                     </tr>
-                <?php }
+                ';} }
                 ?>
             </tbody>
         </table>
+    </div>
 
+    <div class="container-fluid text-center text-light">
+        <h2 class="mb-3 mt-5">Salgados</h2>
+    </div>
+    <div class="container-fluid text-center text-light middle-items" id="tableProduto">
+        <table id="datatablesSimple" class="table table-striped table-dark">
+            <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>Valor</th>
+                    <th>Ação</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php
+                $salgados = $banco->buscaProduto();
+                for ($s = 0; $s < count($salgados); $s++) {
+                    if($salgados[$s]["tipo"] == 'Salgado'){
+                        echo '
+                
+
+                    <tr>
+                        <td>' . htmlentities($salgados[$s]["nome"]) . '</td>
+                        <td>' . htmlentities($salgados[$s]["valor"]) . '</td>
+                        <td>
+                            <div class="btn-group" role="group">
+                                <form action="editarProduto.php" method="post">
+                                    <input type="hidden" value="2" name="registro" id="registro">
+                                    <input type="hidden" value="' . htmlentities($salgados[$s]["produto_id"]) . '" name="produto_id">
+                                    <button type="submit" name="submit" class="btn btn-primary ms-2">Editar</button>
+                                </form>
+                                <form action="../backend/excluir.php" method="post">
+                                    <input type="hidden" value="2" name="registro" id="registro">
+                                    <input type="hidden" value=" '. htmlentities($salgados[$s]["produto_id"]) . '" name="produto_id">
+                                    <button type="submit" name="submit" class="btn btn-primary ms-2">Excluir</button>
+                                </form>
+
+                            </div>
+                        </td>
+                    </tr>
+                ';} }
+                ?>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="container-fluid text-center text-light">
+        <h2 class="mb-3 mt-5">Bolos</h2>
+    </div>
+    <div class="container-fluid text-center text-light middle-items" id="tableProduto">
+        <table id="datatablesSimple" class="table table-striped table-dark">
+            <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>Valor</th>
+                    <th>Ação</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php
+                $bolos = $banco->buscaProduto();
+                for ($b = 0; $b < count($bolos); $b++) {
+                    if($bolos[$b]["tipo"] == 'Bolo'){
+                        echo '
+                
+
+                    <tr>
+                        <td>' . htmlentities($bolos[$b]["nome"]) . '</td>
+                        <td>' . htmlentities($bolos[$b]["valor"]) . '</td>
+                        <td>
+                            <div class="btn-group" role="group">
+                                <form action="editarProduto.php" method="post">
+                                    <input type="hidden" value="2" name="registro" id="registro">
+                                    <input type="hidden" value="' . htmlentities($bolos[$b]["produto_id"]) . '" name="produto_id">
+                                    <button type="submit" name="submit" class="btn btn-primary ms-2">Editar</button>
+                                </form>
+                                <form action="../backend/excluir.php" method="post">
+                                    <input type="hidden" value="2" name="registro" id="registro">
+                                    <input type="hidden" value=" '. htmlentities($bolos[$b]["produto_id"]) . '" name="produto_id">
+                                    <button type="submit" name="submit" class="btn btn-primary ms-2">Excluir</button>
+                                </form>
+
+                            </div>
+                        </td>
+                    </tr>
+                ';} }
+                ?>
+            </tbody>
+        </table>
     </div>
 
     <!-- core  -->

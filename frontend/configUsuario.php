@@ -1,7 +1,7 @@
 <?php
 session_start();
 error_reporting(0);
-include_once(__DIR__ . '../../backend/conecta.php');
+include_once(__DIR__ . '../../backend/banco.php');
 
 $banco = new Banco;
 $conn = $banco->conectar();

@@ -1,6 +1,6 @@
 <?php
 session_start();
-include_once(__DIR__ . '..\..\backend\conecta.php');
+include_once(__DIR__ . '..\..\backend\banco.php');
 if(isset($_POST['login']))
   {
     $email = $_POST['email'];
@@ -68,9 +68,9 @@ if(isset($_POST['login']))
                     <a class="nav-link" href="#gallary">Gallary</a>
                 </li>
             -->
-                <li class="nav-item">
+                <!-- <li class="nav-item">
                     <a class="nav-link" href="#pedido">Fazer Pedido</a>
-                </li>
+                </li> -->
             </ul>
             <a class="navbar-brand m-auto" href="#">
                 <!-- <img src="assets/imgs/logo.svg" class="brand-img" alt=""> -->

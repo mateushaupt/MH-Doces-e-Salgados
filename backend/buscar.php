@@ -1,13 +1,15 @@
 <?php
-include_once('conecta.php');
+include_once('banco.php');
 $dados = $_POST;
 $banco = new Banco;
 $conn = $banco->conectar();
 
+
+
 switch ($pesquisa) {
 
     case 1: //selecionar sem data específica
-        $query = $conn->query('SELECT * FROM produto ORDER BY tipo'); 
+        $query = $conn->query('SELECT * FROM produto'); 
         return $query->fetchAll(PDO::FETCH_ASSOC);
         break;
 

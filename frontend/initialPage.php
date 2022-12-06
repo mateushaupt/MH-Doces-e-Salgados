@@ -1,7 +1,7 @@
 <?php
 session_start();
 error_reporting(0);
-include_once(__DIR__ . '..\..\backend\conecta.php');
+include_once(__DIR__ . '..\..\backend\banco.php');
 
 $banco = new Banco;
 
@@ -197,8 +197,8 @@ $banco = new Banco;
     </div>
     -->
     <!-- book a table Section  -->
-    <div class="container-fluid has-bg-overlay text-center text-light has-height-lg middle-items sumirLogin" id="pedido">
-        <form action="" id="formPedido">
+    <div class="container-fluid has-bg-overlay text-center text-light has-height-lg middle-items" id="pedido">
+        <form action="pedido.php" id="formPedido" method="POST">
             <div class="">
                 <h2 class="section-title mb-5">Fazer Pedido</h2>
                 <div class="row mb-5">
@@ -213,7 +213,7 @@ $banco = new Banco;
                     <div class="col-sm-6 col-md-3 col-xs-12 my-2">
                     </div>
                 </div>
-                <a href="#" class="btn btn-lg btn-primary" id="rounded-btn">PROSSEGUIR</a>
+                <button class="btn btn-lg btn-primary" id="rounded-btn" type="submit">PROSSEGUIR</button>
             </div>
         </form>
     </div>

@@ -26,4 +26,23 @@ function autentica($usuario){
     $query = $conn->query('SELECT * FROM usuario WHERE adm IS NOT NULL AND usuario_id = ' . $usuario);
     return $query->fetchAll(PDO::FETCH_ASSOC);
 }
+
+function buscaProduto(){
+    $conn = $this->conectar();
+    $query = $conn->query('SELECT * FROM produto'); 
+    return $query->fetchAll(PDO::FETCH_ASSOC);
+}
+
+function buscaDoce(){
+    $conn = $this->conectar();
+    $query = $conn->query('SELECT * FROM `produto` WHERE tipo = `Doce`');
+    return $query->fetchAll(PDO::FETCH_ASSOC);
+}
+
+function buscaBolo(){
+    $conn = $this->conectar();
+    $query = $conn->query('SELECT * FROM `produto` WHERE tipo = `Bolo`');
+    return $query->fetchAll(PDO::FETCH_ASSOC);
+}
+
 }

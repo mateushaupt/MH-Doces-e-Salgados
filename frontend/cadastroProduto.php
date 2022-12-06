@@ -1,3 +1,11 @@
+<?php 
+session_start();
+error_reporting(0);
+include_once(__DIR__ . '../../backend/banco.php');
+
+$banco = new Banco;
+$conn = $banco->conectar();
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -15,7 +23,6 @@
 
     <!-- Bootstrap + FoodHut main styles -->
     <link rel="stylesheet" href="assets/css/foodhut.css">
-    <?php session_start(); ?>
 </head>
 
 <body data-spy="scroll" data-target=".navbar" data-offset="40" id="home">
@@ -118,7 +125,7 @@
                     </div>
                 </div>
                 <div class="mb-2">
-                    <a href="initialPage.php" class="btn btn-lg btn-primary col-md-2" id="rounded-btn">Cancelar</a>
+                    <a href="produto.php" class="btn btn-lg btn-primary col-md-2" id="rounded-btn">Cancelar</a>
                     <button type="submit" name="submit" class="btn btn-lg btn-primary col-md-2" id="rounded-btn">Cadastrar</button>
                 </div>
             </div>

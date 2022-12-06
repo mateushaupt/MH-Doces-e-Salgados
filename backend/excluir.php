@@ -1,5 +1,5 @@
 <?php
-include_once('conecta.php');
+include_once('banco.php');
 $dados = $_POST;
 $banco = new Banco;
 $conn = $banco->conectar();
