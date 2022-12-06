@@ -224,14 +224,25 @@ $conn = $banco->conectar();
                 </div>
                 <h2 class="mb-3 mt-5">Local</h2>
                 </div>
+                <div class="row mb-3">
+                    <div class="col-sm-6 col-md-3 col-xs-12 my-2">
+                    </div>
+                    <div class="col-sm-6 col-md-3 col-xs-12 my-2">
+                        <input type="text" id="cidade" name="cidade" class="form-control form-control-lg custom-form-control" placeholder="Cidade">
+                    </div>
+                    <div class="col-sm-6 col-md-3 col-xs-12 my-2">
+                        <input type="text" id="bairro" name="bairro" class="form-control form-control-lg custom-form-control" placeholder="Bairro">
+                    </div>
+                    <div class="col-sm-6 col-md-3 col-xs-12 my-2">
+                    </div>
+                </div>
                 <div class="row mb-5">
                     <div class="col-sm-6 col-md-3 col-xs-12 my-2">
                     </div>
                     <div class="col-sm-6 col-md-3 col-xs-12 my-2">
-                        <input type="time" id="hora" name="hora" class="form-control form-control-lg custom-form-control" placeholder="12:12" value="<?php echo htmlentities($_POST['hora']) ?>">
+                    <input type="text" id="rua" name="rua" class="form-control form-control-lg custom-form-control" placeholder="Rua">
                     </div>
                     <div class="col-sm-6 col-md-3 col-xs-12 my-2">
-                        <input type="date" id="data" name="data" class="form-control form-control-lg custom-form-control" placeholder="12/12/2012" value="<?php echo htmlentities($_POST['data']) ?>">
                     </div>
                     <div class="col-sm-6 col-md-3 col-xs-12 my-2">
                     </div>
