@@ -137,7 +137,7 @@ $conn = $banco->conectar();
                         <td>' . htmlentities($doces[$d]["valor"]) . '</td>
                         <td>
                             <div class="btn-group" role="group">
-                                <input type="number" class="form-control" name="' . htmlentities($doces[$d]["produto_id"]) . '" id="' . htmlentities($doces[$d]["produto_id"]) . '">
+                                <input type="number" class="form-control" name="produtos[' . htmlentities($doces[$d]["produto_id"]) . '][]" id="' . htmlentities($doces[$d]["produto_id"]) . '">
                             </div>
                         </td>
                     </tr>
@@ -174,7 +174,7 @@ $conn = $banco->conectar();
                         <td>' . htmlentities($salgados[$s]["valor"]) . '</td>
                         <td>
                             <div class="btn-group" role="group">
-                                <input type="number" class="form-control" name="' . htmlentities($salgados[$s]["produto_id"]) . '" id="' . htmlentities($salgados[$s]["produto_id"]) . '">
+                                <input type="number" class="form-control" name="produtos[' . htmlentities($salgados[$s]["produto_id"]) . '][]" id="' . htmlentities($salgados[$s]["produto_id"]) . '">
                             </div>
                         </td>
                     </tr>
@@ -211,7 +211,7 @@ $conn = $banco->conectar();
                         <td>' . htmlentities($bolos[$b]["valor"]) . '</td>
                         <td>
                             <div class="btn-group" role="group">
-                                    <input type="number" class="form-control" name="' . htmlentities($bolos[$b]["produto_id"]) . '" id="' . htmlentities($bolos[$b]["produto_id"]) . '">
+                                    <input type="number" class="form-control" name="produtos[' . htmlentities($bolos[$b]["produto_id"]) . '][]" id="' . htmlentities($bolos[$b]["produto_id"]) . '">
                             </div>
                         </td>
                     </tr>
