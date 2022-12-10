@@ -1,11 +1,22 @@
-<?php 
+<?php
 session_start();
 error_reporting(0);
 include_once(__DIR__ . '../../backend/banco.php');
 
 $banco = new Banco;
 $conn = $banco->conectar();
+
+$stmt = $conn->prepare('SELECT nome, quantidade FROM produto WHERE produto_id = :produto_id');
+$stmt->execute(
+    [
+        ':produto_id' => $_POST['produto_id']
+    ]
+);
+$ret = $stmt->fetch();
+
+
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -92,21 +103,21 @@ $conn = $banco->conectar();
         </div>
     </nav>
 
-    <!--  cadastro de produto section  -->
+    <!--  edicao de produto section  -->
     <div class="container-fluid has-bg-overlay text-center text-light has-height-lg middle-items" id="cadastro">
-        <form method="post" name="registration" action="../backend/inserir.php">
-            <input type="hidden" value="4" name="registro" id="registro">
-            <input type="hidden" value="0" name="quantidade" id="quantidade">
+        <form method="post" name="registration" action="../backend/alterar.php">
+            <input type="hidden" value="3" name="registro" id="registro">
+            <input type="hidden" value="<?=$_POST['produto_id']?>" name="produto_id" id="produto_id">
             <div class="">
-                <h2 class="section-title mb-5 mt-5">Cadastrar Produto</h2>
+                <h2 class="section-title mb-5 mt-5">Atualizar estoque</h2>
                 <div class="row mb-3">
                     <div class="col-sm-6 col-md-3 col-xs-12 my-2">
                     </div>
                     <div class="col-sm-6 col-md-3 col-xs-12 my-2">
-                        <input type="text" id="nomeProduto" name="nomeProduto" class="form-control form-control-lg custom-form-control" placeholder="Nome do Produto">
+                        <input type="text" id="nomeProduto" name="nomeProduto" class="form-control form-control-lg custom-form-control" disabled placeholder="Nome do Produto" value="<?php echo htmlentities($ret['nome']) ?>">
                     </div>
                     <div class="col-sm-6 col-md-3 col-xs-12 my-2">
-                        <input type="text" id="valorProduto" name="valorProduto" class="form-control form-control-lg custom-form-control" placeholder="Valor">
+                        <input type="text" id="quantidade" name="quantidade" class="form-control form-control-lg custom-form-control" placeholder="Quantidade Disponível" value="<?php echo htmlentities($ret['quantidade']) ?>">
                     </div>
                     <div class="col-sm-6 col-md-3 col-xs-12 my-2">
                     </div>
@@ -115,26 +126,15 @@ $conn = $banco->conectar();
                     <div class="col-sm-6 col-md-3 col-xs-12 my-2">
                     </div>
                     <div class="col-sm-6 col-md-3 col-xs-12 my-2">
-                        <select class="form-control form-control-lg custom-form-control" id="tipoProduto" name="tipoProduto">
-                            <option value="" disabled selected>Tipo</option>
-                            <option value="Doce">Doce</option>
-                            <option value="Salgado">Salgado</option>
-                            <option value="Bolo">Bolo</option>
-                        </select>
                     </div>
                     <div class="col-sm-6 col-md-3 col-xs-12 my-2">
-                        <select class="form-control form-control-lg custom-form-control" id="estocavel" name="estocavel">
-                            <option value="" disabled selected>É estocável</option>
-                            <option value="1">Sim</option>
-                            <option value="0">Não</option>
-                        </select>
                     </div>
                     <div class="col-sm-6 col-md-3 col-xs-12 my-2">
                     </div>
                 </div>
                 <div class="mb-2">
-                    <a href="produto.php" class="btn btn-lg btn-primary col-md-2" id="rounded-btn">Cancelar</a>
-                    <button type="submit" name="submit" class="btn btn-lg btn-primary col-md-2" id="rounded-btn">Cadastrar</button>
+                    <a href="estoque.php" class="btn btn-lg btn-primary col-md-2" id="rounded-btn">Cancelar</a>
+                    <button type="submit" name="submit" class="btn btn-lg btn-primary col-md-2" id="rounded-btn">Salvar</button>
                 </div>
             </div>
         </form>

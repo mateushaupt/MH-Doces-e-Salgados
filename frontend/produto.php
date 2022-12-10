@@ -3,8 +3,6 @@ session_start();
 include_once(__DIR__ . '..\..\backend\banco.php');
 $banco = new Banco;
 
-$pesquisa = 1;
-
 ?>
 
 <!DOCTYPE html>
@@ -36,10 +34,10 @@ $pesquisa = 1;
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link" href="#home">Início</a>
+                    <a class="nav-link" href="initialPage.php">Início</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#about">Sobre Nós</a>
+                    <a class="nav-link" href="initialPage.php">Sobre Nós</a>
                 </li>
                 <!--
                 <li class="nav-item">
@@ -47,7 +45,7 @@ $pesquisa = 1;
                 </li>
             -->
                 <li class="nav-item">
-                    <a class="nav-link" href="#pedido">Fazer Pedido</a>
+                    <a class="nav-link" href="pedido.php">Fazer Pedido</a>
                 </li>
             </ul>
             <a class="navbar-brand m-auto" href="#">
@@ -61,10 +59,10 @@ $pesquisa = 1;
                 </li>
             -->
                 <li class="nav-item">
-                    <a class="nav-link" href="#testmonial">Reviews</a>
+                    <a class="nav-link" href="initialPage.php">Reviews</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#contact">Contate-nos</a>
+                    <a class="nav-link" href="initialPage.php">Contate-nos</a>
                 </li>
                 <?php
                 if ($banco->autenticaConexao($_SESSION["usuario_id"])) {
@@ -76,11 +74,13 @@ $pesquisa = 1;
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                         ';
                     if ($banco->autentica($_SESSION["usuario_id"])) {
-                        echo '<a class="dropdown-item" href="produto.php">Produtos</a>';
+                        echo '<a class="dropdown-item" href="produto.php">Produtos</a>
+                        <a class="dropdown-item" href="estoque.php">Estoque</a>
+                        <a class="dropdown-item" href="gerenciarPedidos.php">Gerenciar Pedidos</a>';
                     }
                     echo
                     '
-                        <a class="dropdown-item" href="#">Meus Pedidos</a>
+                        <a class="dropdown-item" href="pedidos.php">Meus Pedidos</a>
                         <a class="dropdown-item" href="configUsuario.php">Configurações</a>
                         <a class="dropdown-item" href="..\backend\logout.php">Sair</a>
                         </div>
@@ -96,8 +96,8 @@ $pesquisa = 1;
     <h1 class="mb-3 mt-5">Produtos</h1>
         <div class="mb-3 mt-5">
             
-            <a href="cadastroProduto.php" class="btn btn-primary mb-3 mt-7">Adicionar Produto</a>
-            <a href="initialPage.php" class="btn btn-primary mb-3 mt-7">Voltar</a>
+            <a href="cadastroProduto.php" class="btn btn-lg btn-primary mb-3 mt-7">Adicionar Produto</a>
+            <a href="initialPage.php" class="btn btn-lg btn-primary mb-3 mt-7">Voltar</a>
         </div>
     </div>
     <div class="container-fluid text-center text-light">
@@ -128,12 +128,12 @@ $pesquisa = 1;
                                 <form action="editarProduto.php" method="post">
                                     <input type="hidden" value="2" name="registro" id="registro">
                                     <input type="hidden" value="' . htmlentities($doces[$d]["produto_id"]) . '" name="produto_id">
-                                    <button type="submit" name="submit" class="btn btn-primary ms-2">Editar</button>
+                                    <button type="submit" name="submit" class="btn btn-primary">Editar</button>
                                 </form>
                                 <form action="../backend/excluir.php" method="post">
                                     <input type="hidden" value="2" name="registro" id="registro">
                                     <input type="hidden" value=" '. htmlentities($doces[$d]["produto_id"]) . '" name="produto_id">
-                                    <button type="submit" name="submit" class="btn btn-primary ms-2">Excluir</button>
+                                    <button type="submit" name="submit" class="btn btn-primary ml-1">Excluir</button>
                                 </form>
 
                             </div>

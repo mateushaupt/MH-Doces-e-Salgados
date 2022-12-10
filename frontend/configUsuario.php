@@ -46,10 +46,10 @@ $ret = $stmt->fetch();
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link" href="#home">Início</a>
+                    <a class="nav-link" href="initialPage.php">Início</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#about">Sobre Nós</a>
+                    <a class="nav-link" href="initialPage.php">Sobre Nós</a>
                 </li>
                 <!--
                 <li class="nav-item">
@@ -57,7 +57,7 @@ $ret = $stmt->fetch();
                 </li>
             -->
                 <li class="nav-item">
-                    <a class="nav-link" href="#pedido">Fazer Pedido</a>
+                    <a class="nav-link" href="pedido.php">Fazer Pedido</a>
                 </li>
             </ul>
             <a class="navbar-brand m-auto" href="#">
@@ -71,10 +71,10 @@ $ret = $stmt->fetch();
                 </li>
             -->
                 <li class="nav-item">
-                    <a class="nav-link" href="#testmonial">Reviews</a>
+                    <a class="nav-link" href="initialPage.php">Reviews</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#contact">Contate-nos</a>
+                    <a class="nav-link" href="initialPage.php">Contate-nos</a>
                 </li>
                 <?php
                 if ($banco->autenticaConexao($_SESSION["usuario_id"])) {
@@ -86,11 +86,13 @@ $ret = $stmt->fetch();
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                         ';
                     if ($banco->autentica($_SESSION["usuario_id"])) {
-                        echo '<a class="dropdown-item" href="produto.php">Produtos</a>';
+                        echo '<a class="dropdown-item" href="produto.php">Produtos</a>
+                        <a class="dropdown-item" href="estoque.php">Estoque</a>
+                        <a class="dropdown-item" href="gerenciarPedidos.php">Gerenciar Pedidos</a>';
                     }
                     echo
                     '
-                        <a class="dropdown-item" href="#">Meus Pedidos</a>
+                        <a class="dropdown-item" href="pedidos.php">Meus Pedidos</a>
                         <a class="dropdown-item" href="configUsuario.php">Configurações</a>
                         <a class="dropdown-item" href="..\backend\logout.php">Sair</a>
                         </div>

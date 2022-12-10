@@ -33,15 +33,37 @@ function buscaProduto(){
     return $query->fetchAll(PDO::FETCH_ASSOC);
 }
 
-function buscaDoce(){
+function buscaEstoque(){
     $conn = $this->conectar();
-    $query = $conn->query('SELECT * FROM `produto` WHERE tipo = `Doce`');
+    $query = $conn->query('SELECT produto.produto_id, produto.nome, produto.estocavel, produto.quantidade as quantidade_disp, 
+    SUM(CASE WHEN produto.produto_id = produtos.produto_id THEN produtos.quantidade ELSE 0 END) as quantidade_nesc 
+    FROM produto 
+    INNER JOIN produtos on produto.produto_id = produtos.produto_id 
+    INNER JOIN pedido on produtos.pedido_id = pedido.pedido_id 
+    WHERE produto.estocavel = 1 AND pedido.dia >= CURDATE() AND pedido.entregue = 0 
+    GROUP BY produto_id');
     return $query->fetchAll(PDO::FETCH_ASSOC);
 }
 
-function buscaBolo(){
+function buscaPedido($usuario){
     $conn = $this->conectar();
-    $query = $conn->query('SELECT * FROM `produto` WHERE tipo = `Bolo`');
+    $query = $conn->query('SELECT pedido.pedido_id, CONCAT_WS(", ", pedido.cidade, pedido.bairro, pedido.rua) as endereco, pedido.usuario_id, ROUND(SUM(produtos.quantidade * produto.valor)) as valor, DATE_FORMAT(pedido.dia,"%d/%m/%Y") as dia, pedido.hora
+    FROM pedido
+    INNER JOIN produtos on pedido.pedido_id = produtos.produtos_id
+    INNER JOIN produto on produto.produto_id = produtos.produto_id
+    WHERE pedido.usuario_id = ' . $usuario . '
+    GROUP BY pedido.pedido_id
+    ORDER BY pedido.pedido_id DESC');
+    return $query->fetchAll(PDO::FETCH_ASSOC);
+}
+
+function buscaPedidos(){
+    $conn = $this->conectar();
+    $query = $conn->query('SELECT pedido.pedido_id, pedido.entregue, usuario.usuario_id, usuario.nome, CONCAT_WS(", ", DATE_FORMAT(pedido.dia,"%d/%m/%Y"), pedido.hora) as dia_hora 
+    FROM pedido
+    INNER JOIN usuario on pedido.usuario_id = usuario.usuario_id
+    GROUP BY pedido.pedido_id
+    ORDER BY pedido.pedido_id DESC');
     return $query->fetchAll(PDO::FETCH_ASSOC);
 }
 

@@ -1,11 +1,13 @@
-<?php 
+<?php
 session_start();
-error_reporting(0);
-include_once(__DIR__ . '../../backend/banco.php');
-
+include_once(__DIR__ . '..\..\backend\banco.php');
 $banco = new Banco;
-$conn = $banco->conectar();
+
+$pesquisa = 1;
+
+
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -92,52 +94,52 @@ $conn = $banco->conectar();
         </div>
     </nav>
 
-    <!--  cadastro de produto section  -->
-    <div class="container-fluid has-bg-overlay text-center text-light has-height-lg middle-items" id="cadastro">
-        <form method="post" name="registration" action="../backend/inserir.php">
-            <input type="hidden" value="4" name="registro" id="registro">
-            <input type="hidden" value="0" name="quantidade" id="quantidade">
-            <div class="">
-                <h2 class="section-title mb-5 mt-5">Cadastrar Produto</h2>
-                <div class="row mb-3">
-                    <div class="col-sm-6 col-md-3 col-xs-12 my-2">
-                    </div>
-                    <div class="col-sm-6 col-md-3 col-xs-12 my-2">
-                        <input type="text" id="nomeProduto" name="nomeProduto" class="form-control form-control-lg custom-form-control" placeholder="Nome do Produto">
-                    </div>
-                    <div class="col-sm-6 col-md-3 col-xs-12 my-2">
-                        <input type="text" id="valorProduto" name="valorProduto" class="form-control form-control-lg custom-form-control" placeholder="Valor">
-                    </div>
-                    <div class="col-sm-6 col-md-3 col-xs-12 my-2">
-                    </div>
-                </div>
-                <div class="row mb-3">
-                    <div class="col-sm-6 col-md-3 col-xs-12 my-2">
-                    </div>
-                    <div class="col-sm-6 col-md-3 col-xs-12 my-2">
-                        <select class="form-control form-control-lg custom-form-control" id="tipoProduto" name="tipoProduto">
-                            <option value="" disabled selected>Tipo</option>
-                            <option value="Doce">Doce</option>
-                            <option value="Salgado">Salgado</option>
-                            <option value="Bolo">Bolo</option>
-                        </select>
-                    </div>
-                    <div class="col-sm-6 col-md-3 col-xs-12 my-2">
-                        <select class="form-control form-control-lg custom-form-control" id="estocavel" name="estocavel">
-                            <option value="" disabled selected>É estocável</option>
-                            <option value="1">Sim</option>
-                            <option value="0">Não</option>
-                        </select>
-                    </div>
-                    <div class="col-sm-6 col-md-3 col-xs-12 my-2">
-                    </div>
-                </div>
-                <div class="mb-2">
-                    <a href="produto.php" class="btn btn-lg btn-primary col-md-2" id="rounded-btn">Cancelar</a>
-                    <button type="submit" name="submit" class="btn btn-lg btn-primary col-md-2" id="rounded-btn">Cadastrar</button>
-                </div>
-            </div>
-        </form>
+    <!--  visualizar produto section  -->
+    <div class="container-fluid text-center text-light  middle-items" id="tableProduto">
+        <h1 class="mb-3 mt-5">Estoque</h1>
+        <div class="container-fluid text-center text-light middle-items" id="tableProduto">
+        <table id="datatablesSimple" class="table table-striped table-dark">
+            <thead>
+                <tr>
+                    <th>ID do pedido</th>
+                    <th>Nome do cliente</th>
+                    <th>Dia e Hora</th>
+                    <th>Situação do pedido</th>
+                    <th>Ação</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php
+                $produtos = $banco->buscaPedidos();
+                for ($p = 0; $p < count($produtos); $p++) {
+                    $situacao = 'Não entregue';
+                    if($produtos[$p]["entregue"] == '1') {
+                        $situacao = 'Entregue';
+                    }
+                    
+                    echo '
+                
+
+                    <tr>
+                        <td>#' . htmlentities($produtos[$p]["pedido_id"]) . '</td>
+                        <td>' . htmlentities($produtos[$p]["nome"]) . '</td>
+                        <td>' . htmlentities($produtos[$p]["dia_hora"]) . '</td>
+                        <td>' . htmlentities($situacao) . '</td>
+                        <td>
+                            <div class="btn-group" role="group">
+                                <form action="../backend/alterar.php" method="post">
+                                    <input type="hidden" value="5" name="registro" id="registro">
+                                    <input type="hidden" value="' . htmlentities($produtos[$p]["pedido_id"]) . '" name="pedido_id">
+                                    <input type="hidden" value="1" name="entregue">
+                                    <button type="submit" name="submit" class="btn btn-primary">Marcar como Entregue</button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                ';} 
+                ?>
+            </tbody>
+        </table>
     </div>
 
     <!-- core  -->

@@ -36,10 +36,10 @@ $conn = $banco->conectar();
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link" href="#home">Início</a>
+                    <a class="nav-link" href="initialPage.php">Início</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#about">Sobre Nós</a>
+                    <a class="nav-link" href="initialPage.php">Sobre Nós</a>
                 </li>
                 <!--
                 <li class="nav-item">
@@ -47,7 +47,7 @@ $conn = $banco->conectar();
                 </li>
             -->
                 <li class="nav-item">
-                    <a class="nav-link" href="#pedido">Fazer Pedido</a>
+                    <a class="nav-link" href="#">Fazer Pedido</a>
                 </li>
             </ul>
             <a class="navbar-brand m-auto" href="#">
@@ -61,10 +61,10 @@ $conn = $banco->conectar();
                 </li>
             -->
                 <li class="nav-item">
-                    <a class="nav-link" href="#testmonial">Reviews</a>
+                    <a class="nav-link" href="initialPage.php">Reviews</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#contact">Contate-nos</a>
+                    <a class="nav-link" href="initialPage.php">Contate-nos</a>
                 </li>
                 <?php
                 if ($banco->autenticaConexao($_SESSION["usuario_id"])) {
@@ -76,11 +76,13 @@ $conn = $banco->conectar();
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                         ';
                     if ($banco->autentica($_SESSION["usuario_id"])) {
-                        echo '<a class="dropdown-item" href="produto.php">Produtos</a>';
+                        echo '<a class="dropdown-item" href="produto.php">Produtos</a>
+                        <a class="dropdown-item" href="estoque.php">Estoque</a>
+                        <a class="dropdown-item" href="gerenciarPedidos.php">Gerenciar Pedidos</a>';
                     }
                     echo
                     '
-                        <a class="dropdown-item" href="#">Meus Pedidos</a>
+                        <a class="dropdown-item" href="pedidos.php">Meus Pedidos</a>
                         <a class="dropdown-item" href="configUsuario.php">Configurações</a>
                         <a class="dropdown-item" href="..\backend\logout.php">Sair</a>
                         </div>
@@ -95,6 +97,8 @@ $conn = $banco->conectar();
     <div class="container-fluid text-center text-light has-height-lg middle-items" id="cadastro">
         <form method="post" name="registration" action="../backend/inserir.php">
             <input type="hidden" value="2" name="registro" id="registro">
+            <input type="hidden" value="<?php echo htmlentities($_SESSION["usuario_id"]) ?>" name="usuario_id">
+            <input type="hidden" value="0" name="entregue">
             <div class="mt-5">
                 <h2 class="section-title mb-5">Fazer Pedido</h2>
                 <div class="container-fluid text-center text-light">
@@ -107,7 +111,7 @@ $conn = $banco->conectar();
                         <input type="time" id="hora" name="hora" class="form-control form-control-lg custom-form-control" placeholder="12:12" value="<?php echo htmlentities($_POST['hora']) ?>">
                     </div>
                     <div class="col-sm-6 col-md-3 col-xs-12 my-2">
-                        <input type="date" id="data" name="data" class="form-control form-control-lg custom-form-control" placeholder="12/12/2012" value="<?php echo htmlentities($_POST['data']) ?>">
+                        <input type="date" id="dia" name="dia" class="form-control form-control-lg custom-form-control" placeholder="12/12/2012" value="<?php echo htmlentities($_POST['data']) ?>">
                     </div>
                     <div class="col-sm-6 col-md-3 col-xs-12 my-2">
                     </div>
@@ -129,6 +133,7 @@ $conn = $banco->conectar();
                             $doces = $banco->buscaProduto();
                             for ($d = 0; $d < count($doces); $d++) {
                                 if ($doces[$d]["tipo"] == 'Doce') {
+                                    
                                     echo '
                 
 

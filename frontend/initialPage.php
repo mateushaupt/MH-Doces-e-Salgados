@@ -76,11 +76,13 @@ $banco = new Banco;
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                         ';
                     if ($banco->autentica($_SESSION["usuario_id"])) {
-                        echo '<a class="dropdown-item" href="produto.php">Produtos</a>';
+                        echo '<a class="dropdown-item" href="produto.php">Produtos</a>
+                        <a class="dropdown-item" href="estoque.php">Estoque</a>
+                        <a class="dropdown-item" href="gerenciarPedidos.php">Gerenciar Pedidos</a>';
                     }
                     echo
                     '
-                        <a class="dropdown-item" href="#">Meus Pedidos</a>
+                        <a class="dropdown-item" href="pedidos.php">Meus Pedidos</a>
                         <a class="dropdown-item" href="configUsuario.php">Configurações</a>
                         <a class="dropdown-item" href="..\backend\logout.php">Sair</a>
                         </div>

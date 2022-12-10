@@ -12,12 +12,13 @@ $conn = $banco->conectar();
 
 switch ($dados['registro']) {
     case 1:
-        $query = $conn->prepare(' UPDATE produto SET nome = :nome, valor = :valor, tipo = :tipo  WHERE produto_id = :id ;');        
+        $query = $conn->prepare(' UPDATE produto SET nome = :nome, valor = :valor, tipo = :tipo, estocavel = :estocavel  WHERE produto_id = :id ;');        
         $query->execute([
             ':id' => $dados['produto_id'],
             ':nome' => $dados['nomeProduto'],
             ':valor' => $dados['valorProduto'],
-            ':tipo' => $dados['tipoProduto']
+            ':tipo' => $dados['tipoProduto'],
+            ':estocavel' => $dados['estocavel'],
         ]);
         header('location:..\frontend\produto.php');
         echo "<script>alert('Produto editado com sucesso!');</script>";
@@ -30,14 +31,13 @@ switch ($dados['registro']) {
             ]);
             break;
         case 3:        
-            $query = $conn->prepare('UPDATE cardapio SET dt = :dt, tipo = :tipo, nutricionista_id = :nutricionista WHERE cardapio_id = :id;');        
+            $query = $conn->prepare(' UPDATE produto SET quantidade = :quantidade  WHERE produto_id = :id ;');        
             $query->execute([
-                ':id' => $dados['cardapio_id'],
-                ':dt' => $dados['data'],
-                ':tipo' => $dados['tipo'],
-                ':nutricionista' => $dados['nutricionista']
-    
+                ':id' => $dados['produto_id'],
+                ':quantidade' => $dados['quantidade']
             ]);
+            header('location:..\frontend\estoque.php');
+            echo "<script>alert('Estoque do produto atualizado com sucesso!');</script>";
             break;
 
         case 4:
@@ -51,6 +51,15 @@ switch ($dados['registro']) {
             ]);
             header('location:..\frontend\configUsuario.php');
             echo "<script>alert('Perfil editado com sucesso!');</script>";
+            break;
+
+        case 5:        
+            $query = $conn->prepare(' UPDATE pedido SET entregue = :entregue  WHERE pedido_id = :id ;');        
+            $query->execute([
+                ':id' => $dados['pedido_id'],
+                ':entregue' => $dados['entregue']
+            ]);
+            header('location:..\frontend\gerenciarPedidos.php');
+            echo "<script>alert('Situação do pedido atualizado com sucesso!');</script>";
             break; 
     }
-?>

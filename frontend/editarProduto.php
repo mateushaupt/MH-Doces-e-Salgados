@@ -6,7 +6,7 @@ include_once(__DIR__ . '../../backend/banco.php');
 $banco = new Banco;
 $conn = $banco->conectar();
 
-$stmt = $conn->prepare('SELECT nome, valor, tipo FROM produto WHERE produto_id = :produto_id');
+$stmt = $conn->prepare('SELECT nome, valor, tipo, estocavel FROM produto WHERE produto_id = :produto_id');
 $stmt->execute(
     [
         ':produto_id' => $_POST['produto_id']
@@ -46,10 +46,10 @@ $ret = $stmt->fetch();
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link" href="#home">Início</a>
+                    <a class="nav-link" href="initialPage.php">Início</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#about">Sobre Nós</a>
+                    <a class="nav-link" href="initialPage.php">Sobre Nós</a>
                 </li>
                 <!--
                 <li class="nav-item">
@@ -57,7 +57,7 @@ $ret = $stmt->fetch();
                 </li>
             -->
                 <li class="nav-item">
-                    <a class="nav-link" href="#pedido">Fazer Pedido</a>
+                    <a class="nav-link" href="pedido.php">Fazer Pedido</a>
                 </li>
             </ul>
             <a class="navbar-brand m-auto" href="#">
@@ -71,10 +71,10 @@ $ret = $stmt->fetch();
                 </li>
             -->
                 <li class="nav-item">
-                    <a class="nav-link" href="#testmonial">Reviews</a>
+                    <a class="nav-link" href="initialPage.php">Reviews</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#contact">Contate-nos</a>
+                    <a class="nav-link" href="initialPage.php">Contate-nos</a>
                 </li>
                 <?php
                 if ($banco->autenticaConexao($_SESSION["usuario_id"])) {
@@ -86,11 +86,13 @@ $ret = $stmt->fetch();
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                         ';
                     if ($banco->autentica($_SESSION["usuario_id"])) {
-                        echo '<a class="dropdown-item" href="produto.php">Produtos</a>';
+                        echo '<a class="dropdown-item" href="produto.php">Produtos</a>
+                        <a class="dropdown-item" href="estoque.php">Estoque</a>
+                        <a class="dropdown-item" href="gerenciarPedidos.php">Gerenciar Pedidos</a>';
                     }
                     echo
                     '
-                        <a class="dropdown-item" href="#">Meus Pedidos</a>
+                        <a class="dropdown-item" href="pedidos.php">Meus Pedidos</a>
                         <a class="dropdown-item" href="configUsuario.php">Configurações</a>
                         <a class="dropdown-item" href="..\backend\logout.php">Sair</a>
                         </div>
@@ -126,12 +128,17 @@ $ret = $stmt->fetch();
                     <div class="col-sm-6 col-md-3 col-xs-12 my-2">
                         <select class="form-control form-control-lg custom-form-control" id="tipoProduto" name="tipoProduto">
                             <option value="" disabled selected>Tipo</option>
-                            <option value="Doce" <?php if ($ret['tipo'] == 'doce') print('selected') ?>>Doce</option>
-                            <option value="Salgado" <?php if ($ret['tipo'] == 'salgado') print('selected') ?>>Salgado</option>
-                            <option value="Bolo" <?php if ($ret['tipo'] == 'bolo') print('selected') ?>>Bolo</option>
+                            <option value="Doce" <?php if ($ret['tipo'] == 'Doce') print('selected') ?>>Doce</option>
+                            <option value="Salgado" <?php if ($ret['tipo'] == 'Salgado') print('selected') ?>>Salgado</option>
+                            <option value="Bolo" <?php if ($ret['tipo'] == 'Bolo') print('selected') ?>>Bolo</option>
                         </select>
                     </div>
                     <div class="col-sm-6 col-md-3 col-xs-12 my-2">
+                        <select class="form-control form-control-lg custom-form-control" id="estocavel" name="estocavel">
+                            <option value="" disabled selected>É estocável</option>
+                            <option value="1" <?php if ($ret['estocavel'] == '1') print('selected') ?>>Sim</option>
+                            <option value="0" <?php if ($ret['estocavel'] == '0') print('selected') ?>>Não</option>
+                        </select>
                     </div>
                     <div class="col-sm-6 col-md-3 col-xs-12 my-2">
                     </div>
