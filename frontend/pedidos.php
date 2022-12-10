@@ -136,7 +136,10 @@ $pesquisa = 1;
                                     <input type="hidden" value="<?php echo htmlentities($pedidos[$p]["pedido_id"]); ?>" name="pedido_id">
                                     <button type="submit" name="submit" class="btn btn-primary mr-1" style="float: right;">Cancelar Pedido</button>
                                 </form>
-                                <button type="button" class="btn btn-primary" style="float: right;">Visualizar Pedido</button>
+                                <form action="visualizarPedido.php" method="post">
+                                    <input type="hidden" value="<?php echo htmlentities($pedidos[$p]["pedido_id"]); ?>" name="pedido_id">
+                                    <button type="submit" name="submit" class="btn btn-primary" style="float: right;" >Visualizar Pedido</button>
+                                </form>
                                 </div>
                             </div>
                         </div>

@@ -48,4 +48,4 @@ CREATE TABLE IF NOT EXISTS produtos (
 );
 
 INSERT INTO usuario (nome, senha, telefone, email, adm) VALUES ('Mateus', '123', '51 920221709', 'mateus.haupt@gmail.com', 1);
-INSERT INTO usuario (nome, senha, telefone, email, adm) VALUES ('Lavínia', '1234', '51 917092022', 'laviniapga@gmail.com', 1)
+INSERT INTO usuario (nome, senha, telefone, email) VALUES ('Lavínia', '1234', '51 917092022', 'laviniapga@gmail.com')

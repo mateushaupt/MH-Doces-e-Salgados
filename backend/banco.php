@@ -23,7 +23,7 @@ function autenticaConexao($usuario){
 
 function autentica($usuario){
     $conn = $this->conectar();
-    $query = $conn->query('SELECT * FROM usuario WHERE adm IS NOT NULL AND usuario_id = ' . $usuario);
+    $query = $conn->query('SELECT * FROM usuario WHERE adm = 1 AND usuario_id = ' . $usuario);
     return $query->fetchAll(PDO::FETCH_ASSOC);
 }
 
@@ -64,6 +64,28 @@ function buscaPedidos(){
     INNER JOIN usuario on pedido.usuario_id = usuario.usuario_id
     GROUP BY pedido.pedido_id
     ORDER BY pedido.pedido_id DESC');
+    return $query->fetchAll(PDO::FETCH_ASSOC);
+}
+
+function buscaVisuPedido($pedido){
+    $conn = $this->conectar();
+    $query = $conn->query('SELECT pedido.pedido_id, CONCAT_WS(", ", pedido.cidade, pedido.bairro, pedido.rua) as endereco, pedido.usuario_id, ROUND(SUM(produtos.quantidade * produto.valor)) as valor, DATE_FORMAT(pedido.dia,"%d/%m/%Y") as dia, pedido.hora
+    FROM pedido
+    INNER JOIN produtos on pedido.pedido_id = produtos.produtos_id
+    INNER JOIN produto on produto.produto_id = produtos.produto_id
+    WHERE pedido.pedido_id = ' . $pedido . ' AND produtos.quantidade > 0
+    GROUP BY pedido.pedido_id');
+    return $query->fetch(PDO::FETCH_ASSOC);
+}
+
+function buscaVisuTwoPedido($pedido){
+    $conn = $this->conectar();
+    $query = $conn->query('SELECT produtos.quantidade, produto.nome
+    FROM pedido
+    INNER JOIN produtos on pedido.pedido_id = produtos.produtos_id
+    INNER JOIN produto on produto.produto_id = produtos.produto_id
+    WHERE pedido.pedido_id = ' . $pedido . ' AND produtos.quantidade > 0
+    GROUP BY produto.produto_id');
     return $query->fetchAll(PDO::FETCH_ASSOC);
 }
 

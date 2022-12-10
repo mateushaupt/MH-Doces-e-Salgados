@@ -5,7 +5,6 @@ $banco = new Banco;
 
 $pesquisa = 1;
 
-
 ?>
 
 <!DOCTYPE html>
@@ -95,58 +94,65 @@ $pesquisa = 1;
     </nav>
 
     <!--  visualizar produto section  -->
-    <div class="container-fluid text-center text-light  middle-items" id="tableProduto">
-        <h1 class="mb-3 mt-5">Estoque</h1>
-        <div class="container-fluid text-center text-light middle-items" id="tableProduto">
+    <div class="container-fluid text-center text-light  middle-items mb-5 mt-5" id="tableProduto">
+        <h1>Visualizar Pedido</h1>
+    <?php 
+        $pedido = $banco->buscaVisuPedido($_POST['pedido_id']);
+        ?>
+        <div class="card text-white bg-secondary mb-3 mt-3">
+                        <div class="card-header">
+                            <h3>Pedido #<?=htmlentities($pedido["pedido_id"])?></h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="container">
+                                <div class="row mb-4 justify-content-md-center">
+                                    <div class="col-auto">
+                                        Dia e Hora: <?=htmlentities($pedido["dia"])?>, <?=htmlentities($pedido["hora"])?>
+                                    </div>
+                                </div>
+                                <div class="row mb-4 justify-content-md-center">
+                                    <div class="col-auto">
+                                        Valor Total: R$ <?=htmlentities($pedido["valor"])?>
+                                    </div>
+                                </div>
+                                <div class="row mb-4 justify-content-md-center">
+                                    <div class="col-auto">
+                                        Endereço: <?=htmlentities($pedido["endereco"])?>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+    </div>
+        <div class="container-fluid text-center text-light middle-items mb-3" id="tableProduto">
         <table id="datatablesSimple" class="table table-striped table-dark">
             <thead>
                 <tr>
-                    <th>ID do pedido</th>
-                    <th>Nome do cliente</th>
-                    <th>Dia e Hora</th>
-                    <th>Situação do pedido</th>
-                    <th>Ação</th>
+                    <th>Produtos</th>
+                    <th>Quantidade</th>
                 </tr>
             </thead>
-            <tbody>
-                <?php
-                $produtos = $banco->buscaPedidos();
-                for ($p = 0; $p < count($produtos); $p++) {
-                    $situacao = 'Não entregue';
-                    if($produtos[$p]["entregue"] == '1') {
-                        $situacao = 'Entregue';
-                    }
-                    
+            <tbody>              
+            <?php 
+            $produtos = $banco->buscaVisuTwoPedido($_POST['pedido_id']);
+            for ($p = 0; $p < count($produtos); $p++) { 
                     echo '
-                
-
                     <tr>
-                        <td>#' . htmlentities($produtos[$p]["pedido_id"]) . '</td>
                         <td>' . htmlentities($produtos[$p]["nome"]) . '</td>
-                        <td>' . htmlentities($produtos[$p]["dia_hora"]) . '</td>
-                        <td>' . htmlentities($situacao) . '</td>
-                        <td>
-                            <div class="btn-group" role="group">
-                                <form action="../backend/alterar.php" method="post">
-                                    <input type="hidden" value="5" name="registro" id="registro">
-                                    <input type="hidden" value="' . htmlentities($produtos[$p]["pedido_id"]) . '" name="pedido_id">
-                                    <input type="hidden" value="1" name="entregue">
-                                    <button type="submit" name="submit" class="btn btn-primary">Marcar como Entregue</button>
-                                </form>
-                            </div>
-                            <div class="btn-group" role="group">
-                                <form action="visualizarPedido.php" method="post">
-                                    <input type="hidden" value="5" name="registro" id="registro">
-                                    <input type="hidden" value="' . htmlentities($produtos[$p]["pedido_id"]) . '" name="pedido_id">
-                                    <button type="submit" name="submit" class="btn btn-primary">Ver detalhes</button>
-                                </form>
-                            </div>
-                        </td>
+                        <td>' . htmlentities($produtos[$p]["quantidade"]) . '</td>
                     </tr>
-                ';} 
+                ';
+                } 
                 ?>
             </tbody>
         </table>
+        <?php
+        if ($banco->autentica($_SESSION["usuario_id"])) {
+                        echo '
+                        <a href="gerenciarPedidos.php" class="btn btn-lg btn-primary mt-3 mb-3" id="rounded-btn">Voltar</a>';
+                    } else {echo '<a href="pedidos.php" class="btn btn-lg btn-primary mt-3 mb-3" id="rounded-btn">Voltar</a>';}
+        ?>
+        
     </div>
 
     <!-- core  -->
