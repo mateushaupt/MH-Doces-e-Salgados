@@ -24,6 +24,8 @@ $conn = $banco->conectar();
 
     <!-- Bootstrap + FoodHut main styles -->
     <link rel="stylesheet" href="assets/css/foodhut.css">
+
+    <script type="text/javascript" src="assets/js/foodhut.js"></script>
 </head>
 
 <body data-spy="scroll" data-target=".navbar" data-offset="40" id="home">
@@ -139,7 +141,7 @@ $conn = $banco->conectar();
 
                     <tr>
                         <td>' . htmlentities($doces[$d]["nome"]) . '</td>
-                        <td>' . htmlentities($doces[$d]["valor"]) . '</td>
+                        <td>R$ ' . htmlentities(number_format($doces[$d]["valor"], 2, ',', '.')) . '</td>
                         <td>
                             <div class="btn-group" role="group">
                                 <input type="number" class="form-control" name="produtos[' . htmlentities($doces[$d]["produto_id"]) . '][]" id="' . htmlentities($doces[$d]["produto_id"]) . '">
@@ -176,7 +178,7 @@ $conn = $banco->conectar();
 
                     <tr>
                         <td>' . htmlentities($salgados[$s]["nome"]) . '</td>
-                        <td>' . htmlentities($salgados[$s]["valor"]) . '</td>
+                        <td>R$ ' . htmlentities(number_format($salgados[$s]["valor"], 2, ',', '.')) . '</td>
                         <td>
                             <div class="btn-group" role="group">
                                 <input type="number" class="form-control" name="produtos[' . htmlentities($salgados[$s]["produto_id"]) . '][]" id="' . htmlentities($salgados[$s]["produto_id"]) . '">
@@ -192,7 +194,7 @@ $conn = $banco->conectar();
                 </div>
 
                 <div class="container-fluid text-center text-light">
-                    <h2 class="mb-3 mt-5">Bolos</h2>
+                    <h2 class="mb-3 mt-5">Tortas</h2>
                 </div>
                 <div class="container-fluid text-center text-light middle-items" id="tableProduto">
                     <table id="datatablesSimple" class="table table-striped table-dark">
@@ -207,13 +209,13 @@ $conn = $banco->conectar();
                             <?php
                             $bolos = $banco->buscaProduto();
                             for ($b = 0; $b < count($bolos); $b++) {
-                                if ($bolos[$b]["tipo"] == 'Bolo') {
+                                if ($bolos[$b]["tipo"] == 'Torta') {
                                     echo '
                 
 
                     <tr>
                         <td>' . htmlentities($bolos[$b]["nome"]) . '</td>
-                        <td>' . htmlentities($bolos[$b]["valor"]) . '</td>
+                        <td>R$ ' . htmlentities(number_format($bolos[$b]["valor"], 2, ',', '.')) . '</td>
                         <td>
                             <div class="btn-group" role="group">
                                     <input type="number" class="form-control" name="produtos[' . htmlentities($bolos[$b]["produto_id"]) . '][]" id="' . htmlentities($bolos[$b]["produto_id"]) . '">
@@ -227,6 +229,44 @@ $conn = $banco->conectar();
                         </tbody>
                     </table>
                 </div>
+
+                <div class="container-fluid text-center text-light">
+                    <h2 class="mb-3 mt-5">Outros</h2>
+                </div>
+                <div class="container-fluid text-center text-light middle-items" id="tableProduto">
+                    <table id="datatablesSimple" class="table table-striped table-dark">
+                        <thead>
+                            <tr>
+                                <th>Nome</th>
+                                <th>Valor</th>
+                                <th>Quantidade</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
+                            $outros = $banco->buscaProduto();
+                            for ($b = 0; $b < count($outros); $b++) {
+                                if ($outros[$b]["tipo"] == 'Outros') {
+                                    echo '
+                
+
+                    <tr>
+                        <td>' . htmlentities($outros[$b]["nome"]) . '</td>
+                        <td>R$ ' . htmlentities(number_format($outros[$b]["valor"], 2, ',', '.')) . '</td>
+                        <td>
+                            <div class="btn-group" role="group">
+                                    <input type="number" class="form-control" name="produtos[' . htmlentities($outros[$b]["produto_id"]) . '][]" id="' . htmlentities($outros[$b]["produto_id"]) . '">
+                            </div>
+                        </td>
+                    </tr>
+                ';
+                                }
+                            }
+                            ?>
+                        </tbody>
+                    </table>
+                </div>
+                
                 <h2 class="mb-3 mt-5">Local</h2>
                 </div>
                 <div class="row mb-3">

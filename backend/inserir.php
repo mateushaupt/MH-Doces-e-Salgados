@@ -81,7 +81,7 @@ switch ($dados['registro']) {
                 $query = $conn->prepare('INSERT INTO produto (nome, valor, tipo, estocavel, quantidade) VALUES (:nome, :valor, :tipo, :estocavel, :quantidade);');
                 $query->execute([
                     ':nome' => $dados['nomeProduto'],
-                    ':valor' => $dados['valorProduto'],
+                    ':valor' => str_replace(',', '.', $dados['valorProduto']),
                     ':tipo' => $dados['tipoProduto'],
                     ':estocavel' => $dados['estocavel'],
                     ':quantidade' => $dados['quantidade']

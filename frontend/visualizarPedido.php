@@ -24,6 +24,8 @@ $pesquisa = 1;
 
     <!-- Bootstrap + FoodHut main styles -->
     <link rel="stylesheet" href="assets/css/foodhut.css">
+
+    <script type="text/javascript" src="assets/js/foodhut.js"></script>
 </head>
 
 <body data-spy="scroll" data-target=".navbar" data-offset="40" id="home">
@@ -112,7 +114,7 @@ $pesquisa = 1;
                                 </div>
                                 <div class="row mb-4 justify-content-md-center">
                                     <div class="col-auto">
-                                        Valor Total: R$ <?=htmlentities($pedido["valor"])?>
+                                        Valor Total: R$ <?=htmlentities(number_format($pedido["valor"], 2, ',', '.'))?>
                                     </div>
                                 </div>
                                 <div class="row mb-4 justify-content-md-center">

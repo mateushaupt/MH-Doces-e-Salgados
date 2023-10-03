@@ -25,6 +25,8 @@ $pesquisa = 1;
 
     <!-- Bootstrap + FoodHut main styles -->
     <link rel="stylesheet" href="assets/css/foodhut.css">
+
+    <script type="text/javascript" src="assets/js/foodhut.js"></script>
 </head>
 
 <body data-spy="scroll" data-target=".navbar" data-offset="40" id="home">

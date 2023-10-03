@@ -16,7 +16,7 @@ switch ($dados['registro']) {
         $query->execute([
             ':id' => $dados['produto_id'],
             ':nome' => $dados['nomeProduto'],
-            ':valor' => $dados['valorProduto'],
+            ':valor' => str_replace(',', '.', $dados['valorProduto']),
             ':tipo' => $dados['tipoProduto'],
             ':estocavel' => $dados['estocavel'],
         ]);

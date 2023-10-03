@@ -34,6 +34,8 @@ $ret = $stmt->fetch();
 
     <!-- Bootstrap + FoodHut main styles -->
     <link rel="stylesheet" href="assets/css/foodhut.css">
+
+    <script type="text/javascript" src="assets/js/foodhut.js"></script>
 </head>
 
 <body data-spy="scroll" data-target=".navbar" data-offset="40" id="home">
@@ -117,7 +119,7 @@ $ret = $stmt->fetch();
                         <input type="text" id="nomeProduto" name="nomeProduto" class="form-control form-control-lg custom-form-control" placeholder="Nome do Produto" value="<?php echo htmlentities($ret['nome']) ?>">
                     </div>
                     <div class="col-sm-6 col-md-3 col-xs-12 my-2">
-                        <input type="text" id="valorProduto" name="valorProduto" class="form-control form-control-lg custom-form-control" placeholder="Valor" value="<?php echo htmlentities($ret['valor']) ?>">
+                        <input type="text" id="valorProduto" name="valorProduto" onchange="formatValue(this)" class="form-control form-control-lg custom-form-control" placeholder="Valor" value="<?php echo htmlentities(number_format($ret["valor"], 2, ',', '.')) ?>">
                     </div>
                     <div class="col-sm-6 col-md-3 col-xs-12 my-2">
                     </div>
@@ -130,7 +132,8 @@ $ret = $stmt->fetch();
                             <option value="" disabled selected>Tipo</option>
                             <option value="Doce" <?php if ($ret['tipo'] == 'Doce') print('selected') ?>>Doce</option>
                             <option value="Salgado" <?php if ($ret['tipo'] == 'Salgado') print('selected') ?>>Salgado</option>
-                            <option value="Bolo" <?php if ($ret['tipo'] == 'Bolo') print('selected') ?>>Bolo</option>
+                            <option value="Bolo" <?php if ($ret['tipo'] == 'Torta') print('selected') ?>>Torta</option>
+                            <option value="Bolo" <?php if ($ret['tipo'] == 'Outros') print('selected') ?>>Outros</option>
                         </select>
                     </div>
                     <div class="col-sm-6 col-md-3 col-xs-12 my-2">

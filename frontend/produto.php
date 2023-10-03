@@ -22,6 +22,8 @@ $banco = new Banco;
 
     <!-- Bootstrap + FoodHut main styles -->
     <link rel="stylesheet" href="assets/css/foodhut.css">
+
+    <script type="text/javascript" src="assets/js/foodhut.js"></script>
 </head>
 
 <body data-spy="scroll" data-target=".navbar" data-offset="40" id="home">
@@ -122,7 +124,7 @@ $banco = new Banco;
 
                     <tr>
                         <td>' . htmlentities($doces[$d]["nome"]) . '</td>
-                        <td>' . htmlentities($doces[$d]["valor"]) . '</td>
+                        <td>R$ ' . htmlentities(number_format($doces[$d]["valor"], 2, ',', '.')) . '</td>
                         <td>
                             <div class="btn-group" role="group">
                                 <form action="editarProduto.php" method="post">
@@ -167,7 +169,7 @@ $banco = new Banco;
 
                     <tr>
                         <td>' . htmlentities($salgados[$s]["nome"]) . '</td>
-                        <td>' . htmlentities($salgados[$s]["valor"]) . '</td>
+                        <td>R$ ' . htmlentities(number_format($salgados[$s]["valor"], 2, ',', '.')) . '</td>
                         <td>
                             <div class="btn-group" role="group">
                                 <form action="editarProduto.php" method="post">
@@ -191,7 +193,7 @@ $banco = new Banco;
     </div>
 
     <div class="container-fluid text-center text-light">
-        <h2 class="mb-3 mt-5">Bolos</h2>
+        <h2 class="mb-3 mt-5">Tortas</h2>
     </div>
     <div class="container-fluid text-center text-light middle-items" id="tableProduto">
         <table id="datatablesSimple" class="table table-striped table-dark">
@@ -204,25 +206,70 @@ $banco = new Banco;
             </thead>
             <tbody>
                 <?php
-                $bolos = $banco->buscaProduto();
-                for ($b = 0; $b < count($bolos); $b++) {
-                    if($bolos[$b]["tipo"] == 'Bolo'){
+                $tortas = $banco->buscaProduto();
+                for ($b = 0; $b < count($tortas); $b++) {
+                    if($tortas[$b]["tipo"] == 'Torta'){
                         echo '
                 
 
                     <tr>
-                        <td>' . htmlentities($bolos[$b]["nome"]) . '</td>
-                        <td>' . htmlentities($bolos[$b]["valor"]) . '</td>
+                        <td>' . htmlentities($tortas[$b]["nome"]) . '</td>
+                        <td>R$ ' . htmlentities(number_format($tortas[$b]["valor"], 2, ',', '.')) . '</td>
                         <td>
                             <div class="btn-group" role="group">
                                 <form action="editarProduto.php" method="post">
                                     <input type="hidden" value="2" name="registro" id="registro">
-                                    <input type="hidden" value="' . htmlentities($bolos[$b]["produto_id"]) . '" name="produto_id">
+                                    <input type="hidden" value="' . htmlentities($tortas[$b]["produto_id"]) . '" name="produto_id">
                                     <button type="submit" name="submit" class="btn btn-primary ms-2">Editar</button>
                                 </form>
                                 <form action="../backend/excluir.php" method="post">
                                     <input type="hidden" value="2" name="registro" id="registro">
-                                    <input type="hidden" value=" '. htmlentities($bolos[$b]["produto_id"]) . '" name="produto_id">
+                                    <input type="hidden" value=" '. htmlentities($tortas[$b]["produto_id"]) . '" name="produto_id">
+                                    <button type="submit" name="submit" class="btn btn-primary ms-2">Excluir</button>
+                                </form>
+
+                            </div>
+                        </td>
+                    </tr>
+                ';} }
+                ?>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="container-fluid text-center text-light">
+        <h2 class="mb-3 mt-5">Outros</h2>
+    </div>
+    <div class="container-fluid text-center text-light middle-items" id="tableProduto">
+        <table id="datatablesSimple" class="table table-striped table-dark">
+            <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>Valor</th>
+                    <th>Ação</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php
+                $outros = $banco->buscaProduto();
+                for ($b = 0; $b < count($outros); $b++) {
+                    if($outros[$b]["tipo"] == 'Outros'){
+                        echo '
+                
+
+                    <tr>
+                        <td>' . htmlentities($outros[$b]["nome"]) . '</td>
+                        <td>R$ ' . htmlentities(number_format($outros[$b]["valor"], 2, ',', '.')) . '</td>
+                        <td>
+                            <div class="btn-group" role="group">
+                                <form action="editarProduto.php" method="post">
+                                    <input type="hidden" value="2" name="registro" id="registro">
+                                    <input type="hidden" value="' . htmlentities($outros[$b]["produto_id"]) . '" name="produto_id">
+                                    <button type="submit" name="submit" class="btn btn-primary ms-2">Editar</button>
+                                </form>
+                                <form action="../backend/excluir.php" method="post">
+                                    <input type="hidden" value="2" name="registro" id="registro">
+                                    <input type="hidden" value=" '. htmlentities($outros[$b]["produto_id"]) . '" name="produto_id">
                                     <button type="submit" name="submit" class="btn btn-primary ms-2">Excluir</button>
                                 </form>
 

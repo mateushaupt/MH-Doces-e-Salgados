@@ -23,6 +23,8 @@ $conn = $banco->conectar();
 
     <!-- Bootstrap + FoodHut main styles -->
     <link rel="stylesheet" href="assets/css/foodhut.css">
+    
+    <script type="text/javascript" src="assets/js/foodhut.js"></script>
 </head>
 
 <body data-spy="scroll" data-target=".navbar" data-offset="40" id="home">
@@ -106,7 +108,7 @@ $conn = $banco->conectar();
                         <input type="text" id="nomeProduto" name="nomeProduto" class="form-control form-control-lg custom-form-control" placeholder="Nome do Produto">
                     </div>
                     <div class="col-sm-6 col-md-3 col-xs-12 my-2">
-                        <input type="text" id="valorProduto" name="valorProduto" class="form-control form-control-lg custom-form-control" placeholder="Valor">
+                        <input type="text" id="valorProduto" name="valorProduto" onchange="formatValue(this)" class="form-control form-control-lg custom-form-control" placeholder="Valor">
                     </div>
                     <div class="col-sm-6 col-md-3 col-xs-12 my-2">
                     </div>

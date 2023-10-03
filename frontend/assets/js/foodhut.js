@@ -13,7 +13,7 @@
 */
 
 // smooth scroll
-$(document).ready(function(){
+document.addEventListener("DOMContentLoaded", function(event) {
     $(".navbar .nav-link").on('click', function(event) {
 
         if (this.hash !== "") {
@@ -29,10 +29,12 @@ $(document).ready(function(){
             });
         } 
     });
-
+    
 });
 
-new WOW().init();
+function formatValue(target) {
+    target.value = target.value.replace('.', ',')
+}
 
 function initMap() {
     var uluru = {lat: 29.26134, lng: 51.30406};

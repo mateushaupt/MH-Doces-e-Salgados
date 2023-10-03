@@ -25,6 +25,8 @@ $pesquisa = 1;
 
     <!-- Bootstrap + FoodHut main styles -->
     <link rel="stylesheet" href="assets/css/foodhut.css">
+
+    <script type="text/javascript" src="assets/js/foodhut.js"></script>
 </head>
 
 <body data-spy="scroll" data-target=".navbar" data-offset="40" id="home">
@@ -96,7 +98,7 @@ $pesquisa = 1;
 
     <!--  visualizar produto section  -->
     <div class="container-fluid text-center text-light  middle-items" id="tableProduto">
-        <h1 class="mb-3 mt-5">Estoque</h1>
+        <h1 class="mb-3 mt-5">Gerenciar Pedidos</h1>
         <div class="container-fluid text-center text-light middle-items" id="tableProduto">
         <table id="datatablesSimple" class="table table-striped table-dark">
             <thead>
@@ -113,8 +115,19 @@ $pesquisa = 1;
                 $produtos = $banco->buscaPedidos();
                 for ($p = 0; $p < count($produtos); $p++) {
                     $situacao = 'Não entregue';
+                    $botaoEntregue = '
+                            <div class="btn-group" role="group">
+                                <form action="../backend/alterar.php" method="post">
+                                    <input type="hidden" value="5" name="registro" id="registro">
+                                    <input type="hidden" value="' . htmlentities($produtos[$p]["pedido_id"]) . '" name="pedido_id">
+                                    <input type="hidden" value="1" name="entregue">
+                                    <button type="submit" name="submit" class="btn btn-primary">Marcar como Entregue</button>
+                                </form>
+                            </div>
+                        ';
                     if($produtos[$p]["entregue"] == '1') {
                         $situacao = 'Entregue';
+                        $botaoEntregue = '';
                     }
                     
                     echo '
@@ -126,14 +139,7 @@ $pesquisa = 1;
                         <td>' . htmlentities($produtos[$p]["dia_hora"]) . '</td>
                         <td>' . htmlentities($situacao) . '</td>
                         <td>
-                            <div class="btn-group" role="group">
-                                <form action="../backend/alterar.php" method="post">
-                                    <input type="hidden" value="5" name="registro" id="registro">
-                                    <input type="hidden" value="' . htmlentities($produtos[$p]["pedido_id"]) . '" name="pedido_id">
-                                    <input type="hidden" value="1" name="entregue">
-                                    <button type="submit" name="submit" class="btn btn-primary">Marcar como Entregue</button>
-                                </form>
-                            </div>
+                           '. $botaoEntregue .'
                             <div class="btn-group" role="group">
                                 <form action="visualizarPedido.php" method="post">
                                     <input type="hidden" value="5" name="registro" id="registro">
