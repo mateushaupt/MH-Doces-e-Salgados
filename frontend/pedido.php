@@ -104,7 +104,19 @@ $conn = $banco->conectar();
             <div class="mt-5">
                 <h2 class="section-title mb-5">Fazer Pedido</h2>
                 <div class="container-fluid text-center text-light">
-                <h2 class="mb-3 mt-5">Hora e Dia</h2>
+                    <h2 class="mb-3 mt-5">Nome do Cliente</h2>
+                </div>
+                <div class="row mb-5">
+                    <div class="col-sm-6 col-md-4 col-xs-12 my-2">
+                    </div>
+                    <div class="col-sm-6 col-md-4 col-xs-12 my-2">
+                        <input type="text" id="nome" name="nome" class="form-control form-control-lg custom-form-control" placeholder="Nome" value="<?php echo htmlentities($_POST['nome']) ?>">
+                    </div>
+                    <div class="col-sm-6 col-md-4 col-xs-12 my-2">
+                    </div>
+                </div>
+                <div class="container-fluid text-center text-light">
+                    <h2 class="mb-3 mt-5">Hora e Dia</h2>
                 </div>
                 <div class="row mb-5">
                     <div class="col-sm-6 col-md-3 col-xs-12 my-2">
@@ -132,23 +144,20 @@ $conn = $banco->conectar();
                         </thead>
                         <tbody>
                             <?php
-                            $doces = $banco->buscaProduto();
-                            for ($d = 0; $d < count($doces); $d++) {
-                                if ($doces[$d]["tipo"] == 'Doce') {
-                                    
+                            $produtos = $banco->buscaProduto();
+                            for ($d = 0; $d < count($produtos); $d++) {
+                                if ($produtos[$d]["tipo"] == 'Doce') {
                                     echo '
-                
-
-                    <tr>
-                        <td>' . htmlentities($doces[$d]["nome"]) . '</td>
-                        <td>R$ ' . htmlentities(number_format($doces[$d]["valor"], 2, ',', '.')) . '</td>
-                        <td>
-                            <div class="btn-group" role="group">
-                                <input type="number" class="form-control" name="produtos[' . htmlentities($doces[$d]["produto_id"]) . '][]" id="' . htmlentities($doces[$d]["produto_id"]) . '">
-                            </div>
-                        </td>
-                    </tr>
-                ';
+                                        <tr>
+                                            <td>' . htmlentities($produtos[$d]["nome"]) . '</td>
+                                            <td>R$ ' . htmlentities(number_format($produtos[$d]["valor"], 2, ',', '.')) . '</td>
+                                            <td>
+                                                <div class="btn-group" role="group">
+                                                    <input type="number" class="form-control" name="produtos[' . htmlentities($produtos[$d]["produto_id"]) . '][]" id="' . htmlentities($produtos[$d]["produto_id"]) . '">
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    ';
                                 }
                             }
                             ?>
@@ -170,22 +179,19 @@ $conn = $banco->conectar();
                         </thead>
                         <tbody>
                             <?php
-                            $salgados = $banco->buscaProduto();
-                            for ($s = 0; $s < count($salgados); $s++) {
-                                if ($salgados[$s]["tipo"] == 'Salgado') {
+                            for ($s = 0; $s < count($produtos); $s++) {
+                                if ($produtos[$s]["tipo"] == 'Salgado') {
                                     echo '
-                
-
-                    <tr>
-                        <td>' . htmlentities($salgados[$s]["nome"]) . '</td>
-                        <td>R$ ' . htmlentities(number_format($salgados[$s]["valor"], 2, ',', '.')) . '</td>
-                        <td>
-                            <div class="btn-group" role="group">
-                                <input type="number" class="form-control" name="produtos[' . htmlentities($salgados[$s]["produto_id"]) . '][]" id="' . htmlentities($salgados[$s]["produto_id"]) . '">
-                            </div>
-                        </td>
-                    </tr>
-                ';
+                                        <tr>
+                                            <td>' . htmlentities($produtos[$s]["nome"]) . '</td>
+                                            <td>R$ ' . htmlentities(number_format($produtos[$s]["valor"], 2, ',', '.')) . '</td>
+                                            <td>
+                                                <div class="btn-group" role="group">
+                                                    <input type="number" class="form-control" name="produtos[' . htmlentities($produtos[$s]["produto_id"]) . '][]" id="' . htmlentities($produtos[$s]["produto_id"]) . '">
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    ';
                                 }
                             }
                             ?>
@@ -207,22 +213,19 @@ $conn = $banco->conectar();
                         </thead>
                         <tbody>
                             <?php
-                            $bolos = $banco->buscaProduto();
-                            for ($b = 0; $b < count($bolos); $b++) {
-                                if ($bolos[$b]["tipo"] == 'Torta') {
+                            for ($b = 0; $b < count($produtos); $b++) {
+                                if ($produtos[$b]["tipo"] == 'Torta') {
                                     echo '
-                
-
-                    <tr>
-                        <td>' . htmlentities($bolos[$b]["nome"]) . '</td>
-                        <td>R$ ' . htmlentities(number_format($bolos[$b]["valor"], 2, ',', '.')) . '</td>
-                        <td>
-                            <div class="btn-group" role="group">
-                                    <input type="number" class="form-control" name="produtos[' . htmlentities($bolos[$b]["produto_id"]) . '][]" id="' . htmlentities($bolos[$b]["produto_id"]) . '">
-                            </div>
-                        </td>
-                    </tr>
-                ';
+                                        <tr>
+                                            <td>' . htmlentities($produtos[$b]["nome"]) . '</td>
+                                            <td>R$ ' . htmlentities(number_format($produtos[$b]["valor"], 2, ',', '.')) . '</td>
+                                            <td>
+                                                <div class="btn-group" role="group">
+                                                        <input type="number" class="form-control" step="any" name="produtos[' . htmlentities($produtos[$b]["produto_id"]) . '][]" id="' . htmlentities($produtos[$b]["produto_id"]) . '">
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    ';
                                 }
                             }
                             ?>
@@ -244,22 +247,19 @@ $conn = $banco->conectar();
                         </thead>
                         <tbody>
                             <?php
-                            $outros = $banco->buscaProduto();
-                            for ($b = 0; $b < count($outros); $b++) {
-                                if ($outros[$b]["tipo"] == 'Outros') {
+                            for ($b = 0; $b < count($produtos); $b++) {
+                                if ($produtos[$b]["tipo"] == 'Outros') {
                                     echo '
-                
-
-                    <tr>
-                        <td>' . htmlentities($outros[$b]["nome"]) . '</td>
-                        <td>R$ ' . htmlentities(number_format($outros[$b]["valor"], 2, ',', '.')) . '</td>
-                        <td>
-                            <div class="btn-group" role="group">
-                                    <input type="number" class="form-control" name="produtos[' . htmlentities($outros[$b]["produto_id"]) . '][]" id="' . htmlentities($outros[$b]["produto_id"]) . '">
-                            </div>
-                        </td>
-                    </tr>
-                ';
+                                        <tr>
+                                            <td>' . htmlentities($produtos[$b]["nome"]) . '</td>
+                                            <td>R$ ' . htmlentities(number_format($produtos[$b]["valor"], 2, ',', '.')) . '</td>
+                                            <td>
+                                                <div class="btn-group" role="group">
+                                                        <input type="number" class="form-control" name="produtos[' . htmlentities($produtos[$b]["produto_id"]) . '][]" id="' . htmlentities($produtos[$b]["produto_id"]) . '">
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    ';
                                 }
                             }
                             ?>

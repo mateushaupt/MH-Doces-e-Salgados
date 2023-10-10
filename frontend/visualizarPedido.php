@@ -98,63 +98,171 @@ $pesquisa = 1;
     <!--  visualizar produto section  -->
     <div class="container-fluid text-center text-light  middle-items mb-5 mt-5" id="tableProduto">
         <h1>Visualizar Pedido</h1>
-    <?php 
+        <?php 
         $pedido = $banco->buscaVisuPedido($_POST['pedido_id']);
         ?>
         <div class="card text-white bg-secondary mb-3 mt-3">
-                        <div class="card-header">
-                            <h3>Pedido #<?=htmlentities($pedido["pedido_id"])?></h3>
-                        </div>
-                        <div class="card-body">
-                            <div class="container">
-                                <div class="row mb-4 justify-content-md-center">
-                                    <div class="col-auto">
-                                        Dia e Hora: <?=htmlentities($pedido["dia"])?>, <?=htmlentities($pedido["hora"])?>
-                                    </div>
-                                </div>
-                                <div class="row mb-4 justify-content-md-center">
-                                    <div class="col-auto">
-                                        Valor Total: R$ <?=htmlentities(number_format($pedido["valor"], 2, ',', '.'))?>
-                                    </div>
-                                </div>
-                                <div class="row mb-4 justify-content-md-center">
-                                    <div class="col-auto">
-                                        Endereço: <?=htmlentities($pedido["endereco"])?>
-                                    </div>
-                                </div>
-                            </div>
+            <div class="card-header">
+                <h3>Pedido #<?=htmlentities($pedido["pedido_id"])?></h3>
+            </div>
+            <div class="card-body">
+                <div class="container">
+                    <div class="row mb-4 justify-content-md-center">
+                        <div class="col-auto">
+                            Cliente: <?=htmlentities($pedido["nome"])?>
                         </div>
                     </div>
+                    <div class="row mb-4 justify-content-md-center">
+                        <div class="col-auto">
+                            Dia e Hora: <?=htmlentities($pedido["dia"])?>, <?=htmlentities($pedido["hora"])?>
+                        </div>
+                    </div>
+                    <div class="row mb-4 justify-content-md-center">
+                        <div class="col-auto">
+                            Valor Total: R$ <?=htmlentities(number_format($pedido["valor"], 2, ',', '.'))?>
+                        </div>
+                    </div>
+                    <div class="row mb-4 justify-content-md-center">
+                        <div class="col-auto">
+                            Endereço: <?=htmlentities($pedido["endereco"])?>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-        <div class="container-fluid text-center text-light middle-items mb-3" id="tableProduto">
-        <table id="datatablesSimple" class="table table-striped table-dark">
-            <thead>
+    <div class="container-fluid text-center text-light">
+        <h2 class="mb-3 mt-5">Doces</h2>
+    </div>
+    <div class="container-fluid text-center text-light middle-items mb-3" id="tableProduto">
+    <table id="datatablesSimple" class="table table-striped table-dark">
+        <thead>
+            <tr>
+                <th>Produtos</th>
+                <th>Quantidade</th>
+            </tr>
+        </thead>
+        <tbody>              
+        <?php 
+        $produtos = $banco->buscaVisuTwoPedido($_POST['pedido_id']);
+        $quantidadeDoces = 0;
+        for ($p = 0; $p < count($produtos); $p++) {
+            if ($produtos[$p]["tipo"] == 'Doce') {
+                 $quantidadeDoces += $produtos[$p]["quantidade"];
+                echo '
                 <tr>
-                    <th>Produtos</th>
-                    <th>Quantidade</th>
+                    <td>' . htmlentities($produtos[$p]["nome"]) . '</td>
+                    <td>' . htmlentities($produtos[$p]["quantidade"]) . '</td>
                 </tr>
-            </thead>
-            <tbody>              
-            <?php 
-            $produtos = $banco->buscaVisuTwoPedido($_POST['pedido_id']);
-            for ($p = 0; $p < count($produtos); $p++) { 
-                    echo '
-                    <tr>
-                        <td>' . htmlentities($produtos[$p]["nome"]) . '</td>
-                        <td>' . htmlentities($produtos[$p]["quantidade"]) . '</td>
-                    </tr>
                 ';
-                } 
-                ?>
-            </tbody>
-        </table>
-        <?php
-        if ($banco->autentica($_SESSION["usuario_id"])) {
-                        echo '
-                        <a href="gerenciarPedidos.php" class="btn btn-lg btn-primary mt-3 mb-3" id="rounded-btn">Voltar</a>';
-                    } else {echo '<a href="pedidos.php" class="btn btn-lg btn-primary mt-3 mb-3" id="rounded-btn">Voltar</a>';}
+            }
+        } 
         ?>
-        
+        </tbody>
+    </table>
+    <div class="row mb-4 justify-content-md-end mr-5">
+        <div class="col-auto mr-5">Total: <?=htmlentities($quantidadeDoces)?></div>
+    </div>
+    <div class="container-fluid text-center text-light">
+        <h2 class="mb-3 mt-5">Salgados</h2>
+    </div>
+    <div class="container-fluid text-center text-light middle-items mb-3" id="tableProduto">
+    <table id="datatablesSimple" class="table table-striped table-dark">
+        <thead>
+            <tr>
+                <th>Produtos</th>
+                <th>Quantidade</th>
+            </tr>
+        </thead>
+        <tbody>              
+        <?php 
+        $quantidadeSalgados = 0;
+        for ($p = 0; $p < count($produtos); $p++) {
+            if ($produtos[$p]["tipo"] == 'Salgado') {
+                 $quantidadeSalgados += $produtos[$p]["quantidade"];
+                echo '
+                <tr>
+                    <td>' . htmlentities($produtos[$p]["nome"]) . '</td>
+                    <td>' . htmlentities($produtos[$p]["quantidade"]) . '</td>
+                </tr>
+                ';
+            }
+        } 
+        ?>
+        </tbody>
+    </table>
+    <div class="row mb-4 justify-content-md-end mr-5">
+        <div class="col-auto mr-5">Total: <?=htmlentities($quantidadeSalgados)?></div>
+    </div>
+    <div class="container-fluid text-center text-light">
+        <h2 class="mb-3 mt-5">Tortas</h2>
+    </div>
+    <div class="container-fluid text-center text-light middle-items mb-3" id="tableProduto">
+    <table id="datatablesSimple" class="table table-striped table-dark">
+        <thead>
+            <tr>
+                <th>Produtos</th>
+                <th>Quantidade</th>
+            </tr>
+        </thead>
+        <tbody>              
+        <?php 
+        $quantidadeTortas = 0;
+        for ($p = 0; $p < count($produtos); $p++) {
+            if ($produtos[$p]["tipo"] == 'Torta') {
+                 $quantidadeTortas += $produtos[$p]["quantidade"];
+                echo '
+                <tr>
+                    <td>' . htmlentities($produtos[$p]["nome"]) . '</td>
+                    <td>' . htmlentities($produtos[$p]["quantidade"]) . '</td>
+                </tr>
+                ';
+            }
+        } 
+        ?>
+        </tbody>
+    </table>
+    <div class="row mb-4 justify-content-md-end mr-5">
+        <div class="col-auto mr-5">Total: <?=htmlentities($quantidadeTortas)?></div>
+    </div>
+    <div class="container-fluid text-center text-light">
+        <h2 class="mb-3 mt-5">Outros</h2>
+    </div>
+    <div class="container-fluid text-center text-light middle-items mb-3" id="tableProduto">
+    <table id="datatablesSimple" class="table table-striped table-dark">
+        <thead>
+            <tr>
+                <th>Produtos</th>
+                <th>Quantidade</th>
+            </tr>
+        </thead>
+        <tbody>              
+        <?php 
+        $quantidadeOutros = 0;
+        for ($p = 0; $p < count($produtos); $p++) {
+            if ($produtos[$p]["tipo"] == 'Outros') {
+                 $quantidadeOutros += $produtos[$p]["quantidade"];
+                echo '
+                <tr>
+                    <td>' . htmlentities($produtos[$p]["nome"]) . '</td>
+                    <td>' . htmlentities($produtos[$p]["quantidade"]) . '</td>
+                </tr>
+                ';
+            }
+        } 
+        ?>
+        </tbody>
+    </table>
+    <div class="row mb-4 justify-content-md-end mr-5">
+        <div class="col-auto mr-5">Total: <?=htmlentities($quantidadeOutros)?></div>
+    </div>
+    <?php
+    if ($banco->autentica($_SESSION["usuario_id"])) {
+                    echo '
+                    <a href="gerenciarPedidos.php" class="btn btn-lg btn-primary mt-3 mb-3" id="rounded-btn">Voltar</a>';
+                } else {echo '<a href="pedidos.php" class="btn btn-lg btn-primary mt-3 mb-3" id="rounded-btn">Voltar</a>';}
+    ?>
+    
     </div>
 
     <!-- core  -->

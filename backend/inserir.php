@@ -17,7 +17,7 @@ try {
 switch ($dados['registro']) {
 
     case 2:
-        $query = $conn->prepare('INSERT INTO pedido (dia, hora, cidade, bairro, rua, usuario_id, entregue) VALUES (:dia, :hora, :cidade, :bairro, :rua, :usuario_id, :entregue);');
+        $query = $conn->prepare('INSERT INTO pedido (dia, hora, cidade, bairro, rua, usuario_id, entregue, nome) VALUES (:dia, :hora, :cidade, :bairro, :rua, :usuario_id, :entregue, :nome);');
         $query->execute([
             ':dia' => $dados['dia'],
             ':hora' => $dados['hora'],
@@ -25,7 +25,8 @@ switch ($dados['registro']) {
             ':bairro' => $dados['bairro'],
             ':rua' => $dados['rua'],
             ':usuario_id' => $dados['usuario_id'],
-            ':entregue' => $dados['entregue']
+            ':entregue' => $dados['entregue'],
+            ':nome' => $dados['nome']
         ]);
 
         $pedido_id = pegaUltimoIdPedido($conn);

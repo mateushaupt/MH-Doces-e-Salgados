@@ -125,9 +125,17 @@ $pesquisa = 1;
                                 </form>
                             </div>
                         ';
-                    if($produtos[$p]["entregue"] == '1') {
+
+                    if ($produtos[$p]["entregue"] == '1') {
                         $situacao = 'Entregue';
-                        $botaoEntregue = '';
+                        $botaoEntregue = '<div class="btn-group" role="group">
+                            <form action="../backend/alterar.php" method="post">
+                                <input type="hidden" value="5" name="registro" id="registro">
+                                <input type="hidden" value="' . htmlentities($produtos[$p]["pedido_id"]) . '" name="pedido_id">
+                                <input type="hidden" value="0" name="entregue">
+                                <button type="submit" name="submit" class="btn btn-primary">Marcar como não Entregue</button>
+                            </form>
+                        </div>';
                     }
                     
                     echo '

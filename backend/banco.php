@@ -47,7 +47,7 @@ function buscaEstoque(){
 
 function buscaPedido($usuario){
     $conn = $this->conectar();
-    $query = $conn->query('SELECT pedido.pedido_id, CONCAT_WS(", ", pedido.cidade, pedido.bairro, pedido.rua) as endereco, pedido.usuario_id, ROUND(SUM(produtos.quantidade * produto.valor)) as valor, DATE_FORMAT(pedido.dia,"%d/%m/%Y") as dia, pedido.hora
+    $query = $conn->query('SELECT pedido.pedido_id,  pedido.nome, CONCAT_WS(", ", pedido.cidade, pedido.bairro, pedido.rua) as endereco, pedido.usuario_id, ROUND(SUM(produtos.quantidade * produto.valor)) as valor, DATE_FORMAT(pedido.dia,"%d/%m/%Y") as dia, pedido.hora
     FROM pedido
     INNER JOIN produtos on pedido.pedido_id = produtos.produtos_id
     INNER JOIN produto on produto.produto_id = produtos.produto_id
@@ -59,7 +59,7 @@ function buscaPedido($usuario){
 
 function buscaPedidos(){
     $conn = $this->conectar();
-    $query = $conn->query('SELECT pedido.pedido_id, pedido.entregue, usuario.usuario_id, usuario.nome, CONCAT_WS(", ", DATE_FORMAT(pedido.dia,"%d/%m/%Y"), pedido.hora) as dia_hora 
+    $query = $conn->query('SELECT pedido.pedido_id, pedido.entregue, usuario.usuario_id, pedido.nome, CONCAT_WS(", ", DATE_FORMAT(pedido.dia,"%d/%m/%Y"), pedido.hora) as dia_hora 
     FROM pedido
     INNER JOIN usuario on pedido.usuario_id = usuario.usuario_id
     GROUP BY pedido.pedido_id
@@ -69,7 +69,7 @@ function buscaPedidos(){
 
 function buscaVisuPedido($pedido){
     $conn = $this->conectar();
-    $query = $conn->query('SELECT pedido.pedido_id, CONCAT_WS(", ", pedido.cidade, pedido.bairro, pedido.rua) as endereco, pedido.usuario_id, ROUND(SUM(produtos.quantidade * produto.valor)) as valor, DATE_FORMAT(pedido.dia,"%d/%m/%Y") as dia, pedido.hora
+    $query = $conn->query('SELECT pedido.pedido_id, pedido.nome, CONCAT_WS(", ", pedido.cidade, pedido.bairro, pedido.rua) as endereco, pedido.usuario_id, ROUND(SUM(produtos.quantidade * produto.valor)) as valor, DATE_FORMAT(pedido.dia,"%d/%m/%Y") as dia, pedido.hora
     FROM pedido
     INNER JOIN produtos on pedido.pedido_id = produtos.produtos_id
     INNER JOIN produto on produto.produto_id = produtos.produto_id
@@ -80,7 +80,7 @@ function buscaVisuPedido($pedido){
 
 function buscaVisuTwoPedido($pedido){
     $conn = $this->conectar();
-    $query = $conn->query('SELECT produtos.quantidade, produto.nome
+    $query = $conn->query('SELECT produtos.quantidade, produto.nome, produto.tipo
     FROM pedido
     INNER JOIN produtos on pedido.pedido_id = produtos.produtos_id
     INNER JOIN produto on produto.produto_id = produtos.produto_id

@@ -119,6 +119,11 @@ $pesquisa = 1;
                             <div class="container">
                                 <div class="row mb-4 justify-content-md-center">
                                     <div class="col-auto">
+                                        Cliente: <?php echo htmlentities($pedidos[$p]["nome"]); ?>
+                                    </div>
+                                </div>
+                                <div class="row mb-4 justify-content-md-center">
+                                    <div class="col-auto">
                                         Dia e Hora: <?php echo htmlentities($pedidos[$p]["dia"]); ?>, <?php echo htmlentities($pedidos[$p]["hora"]); ?>
                                     </div>
                                 </div>
